@@ -13,3 +13,8 @@ The main goal of this project is to describe and demonstrate model explanation t
 - Discussing how to communicate the artifacts of these techniques.
 - Discussing potential recommendations to regulators who will review ML models.
 
+-----
+
+Please note that this project is released with a [Contributor Code of
+Conduct](https://github.com/kasaai/quests/blob/master/CODE_OF_CONDUCT.md). By participating in this project
+you agree to abide by its terms.
