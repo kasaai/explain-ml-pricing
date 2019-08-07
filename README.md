@@ -4,6 +4,10 @@
 [![Travis build status](https://travis-ci.org/kasaai/explain-ml-pricing.svg?branch=master)](https://travis-ci.org/kasaai/explain-ml-pricing)
 <!-- badges: end -->
 
+Live draft preview: [kasaai.github.io/explain-ml-pricing/manuscript.pdf](https://kasaai.github.io/explain-ml-pricing/manuscript.pdf)
+
+Slack: [slack.kasa.ai](https://slack.kasa.ai/) `#explain-ml-pricing`
+
 Risk classification for insurance rating has traditionally been done with one-way, or univariate, analysis techniques. In recent years, many insurers have moved towards using generalized linear models (GLM), a multivariate predictive modeling technique, which addresses many shortcomings of univariate approaches, and is currently considered the state of the art in insurance risk classification. At the same time, machine learning (ML) techniques such as random forests and deep neural networks have gained popularity in many industries due to their superior predictive performance over linear models. However, these ML techniques, often considered to be completely “black box”, have been less successful in gaining adoption in insurance pricing, which is a regulated discipline and requires a certain amount of transparency in models. While recent efforts in ML research have attempted to provide mechanisms for explaining or interpreting these complex models, to the best of our knowledge none has focused on the insurance pricing use case, which we plan to address in this project. We envision that this work will be a step in enabling insurers to use and file more accurate predictive models, which lead to fairer prices. In addition, it is our intent that this work will assist practitioners in complying with relevant Actuarial Standards of Practice related to ratemaking, modeling, and clear communication of relevant assumptions. This will have additional benefits to regulators and other stakeholders tasked with reviewing actuarial work products.
 
 The main goal of this project is to describe and demonstrate model explanation techniques for machine learning models in the context of insurance pricing. To that end, this project will involve
