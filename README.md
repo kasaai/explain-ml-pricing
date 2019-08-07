@@ -16,6 +16,10 @@ The main goal of this project is to describe and demonstrate model explanation t
 
 -----
 
+Repository for the paper "Towards Explainability of Machine Learning Models in Insurance Pricing." This work is supported by the Casualty Actuarial Society.
+
+-----
+
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/kasaai/quests/blob/master/CODE_OF_CONDUCT.md). By participating in this project
 you agree to abide by its terms.
