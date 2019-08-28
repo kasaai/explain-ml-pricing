@@ -1,0 +1,34 @@
+---
+title: |
+ Towards Explainability of Machine Learning Models in Insurance Pricing
+type: ARTICLE TEMPLATE
+author:
+  - name: Author One
+    affil: a
+    email: foo@bar.foo
+  - name: Author Two
+    affil: b
+    email: bar@foo.bar
+affiliation:
+  - num: a
+    address: |
+      Foo
+  - num: b
+    address: |
+      Bar
+bibliography: interactcadsample.bib
+appendix: appendix.tex
+abstract: |
+  Abstract tbd
+keywords: |
+  actuarial science; general insurance
+header-includes: |
+  \usepackage{hyperref}
+  \usepackage[utf8]{inputenc}
+  \def\tightlist{}
+output: rticles::tf_article
+---
+
+# Introduction
+
+Risk classification for insurance rating has traditionally been done with one-way, or univariate, analysis techniques. In recent years, many insurers have moved towards using generalized linear models (GLM), a multivariate predictive modeling technique, which addresses many shortcomings of univariate approaches, and is currently considered the state of the art in insurance risk classification. At the same time, machine learning (ML) techniques such as random forests and deep neural networks have gained popularity in many industries due to their superior predictive performance over linear models. However, these ML techniques, often considered to be completely “black box”, have been less successful in gaining adoption in insurance pricing, which is a regulated discipline and requires a certain amount of transparency in models.
