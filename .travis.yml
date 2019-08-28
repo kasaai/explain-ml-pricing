@@ -11,8 +11,8 @@ cache:
 script:
 - Rscript -e 'if (tinytex::tinytex_root() == "") tinytex::install_tinytex()'
 - Rscript -e 'tinytex::tlmgr_install("cm-super")'
-- Rscript -e 'dir.create("manuscript/dist")' 
-- Rscript -e 'withr::with_dir("manuscript", tinytex::pdflatex("template.tex", pdf_file = "dist/manuscript.pdf"))'
+- Rscript -e 'dir.create("manuscript/dist")'
+- Rscript -e 'rmarkdown::render("manuscript/manuscript.Rmd", output_dir = "manuscript/dist/")'
 
 deploy:
   provider: pages
