@@ -35,6 +35,8 @@ Risk classification for property & casualty (P&C) insurance rating has tradition
 
 If insurers can gain more insight into how ML models behave in risk classification contexts, it would increase their ability to reassure regulators and the public that accepted ratemaking principles are met. Being able to charge more accurate premiums would, in turn, make the risk transfer system more efficient and contribute to the betterment of society. In this paper, we aim to take a step towards liberating actuaries from the confines of linear models in pricing projects, by proposing a framework for explaining ML models for ratemaking that regulators, practictioners, and researchers in actuarial science can build upon.
 
+(add outline for rest of paper)
+
 # Property and Casualty Ratemaking
 
 (overview of p/c ratemaking: what it is, maybe a bit of history of getting from univariate methods to GLMs today, point out that in this paper we're really dealing with the risk classification aspect)
