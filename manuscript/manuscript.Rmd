@@ -1,7 +1,7 @@
 ---
 title: |
  Towards Explainability of Machine Learning Models in Insurance Pricing
-type: ARTICLE TEMPLATE
+type: WIP DRAFT 
 author:
   - name: Author One
     affil: a
@@ -16,7 +16,7 @@ affiliation:
   - num: b
     address: |
       Bar
-bibliography: interactcadsample.bib
+bibliography: explain-pricing.bib
 appendix: appendix.tex
 abstract: |
   Abstract tbd
@@ -31,4 +31,28 @@ output: rticles::tf_article
 
 # Introduction
 
-Risk classification for insurance rating has traditionally been done with one-way, or univariate, analysis techniques. In recent years, many insurers have moved towards using generalized linear models (GLM), a multivariate predictive modeling technique, which addresses many shortcomings of univariate approaches, and is currently considered the state of the art in insurance risk classification. At the same time, machine learning (ML) techniques such as random forests and deep neural networks have gained popularity in many industries due to their superior predictive performance over linear models. However, these ML techniques, often considered to be completely “black box”, have been less successful in gaining adoption in insurance pricing, which is a regulated discipline and requires a certain amount of transparency in models.
+Risk classification for property & casualty (P&C) insurance rating has traditionally been done with one-way, or univariate, analysis techniques. In recent years, many insurers have moved towards using generalized linear models (GLM), a multivariate predictive modeling technique, which addresses many shortcomings of univariate approaches, and is currently considered the state of the art in insurance risk classification. At the same time, machine learning (ML) techniques such as deep neural networks have gained popularity in many industries due to their superior predictive performance over linear models [@lecunDeepLearning2015]. In fact, there is a fast growing body of literatuer on applying ML to P&C reserving [@kuoDeepTriangleDeep2018; @wuthrichMachineLearning2018; @gabrielliNeuralNetwork2019a; @gabrielliNeuralNetwork2019]. However, these ML techniques, often considered to be completely “black box”, have been less successful in gaining adoption in pricing, which is a regulated discipline and requires a certain amount of transparency in models.
+
+If insurers can gain more insight into how ML models behave in risk classification contexts, it would increase their ability to reassure regulators and the public that accepted ratemaking principles are met. Being able to charge more accurate premiums would, in turn, make the risk transfer system more efficient and contribute to the betterment of society. In this paper, we aim to take a step towards liberating actuaries from the confines of linear models in pricing projects, by proposing a framework for explaining ML models for ratemaking that regulators, practictioners, and researchers in actuarial science can build upon.
+
+(add outline for rest of paper)
+
+# Property and Casualty Ratemaking
+
+(overview of p/c ratemaking: what it is, maybe a bit of history of getting from univariate methods to GLMs today, point out that in this paper we're really dealing with the risk classification aspect)
+
+# Interpretability in the Ratemaking Context
+
+(literature review, settle on a definition to work with, e.g. @doshi-velezRigorousScience2017, identify maybe 3 questions about a model to answer, tie to principles on p/c ratemaking)
+
+# Applying Model Interpretation Techniques
+
+(some definitions, e.g. global/model vs. local/instance, categorize questions accordingly)
+
+## (answer each question)
+
+(for each question, propose a technique, mention alternative techniques, pros/cons, implement, interpret results)
+
+# Conclusion
+
+(conclude)
