@@ -35,17 +35,17 @@ Risk classification for property & casualty (P&C) insurance rating has tradition
 
 If insurers can gain more insight into how ML models behave in risk classification contexts, it would increase their ability to reassure regulators and the public that accepted ratemaking principles are met. Being able to charge more accurate premiums would, in turn, make the risk transfer system more efficient and contribute to the betterment of society. In this paper, we aim to take a step towards liberating actuaries from the confines of linear models in pricing projects, by proposing a framework for explaining ML models for ratemaking that regulators, practictioners, and researchers in actuarial science can build upon.
 
-(add outline for rest of paper)
+The rest of this paper is organized as follows: Section \ref{ratemaking} provides an overview of P&C ratemaking, Section \ref{interpretability} discusses model interpretability in the context of ratemaking and proposes specific tasks for model explanation, Section \ref{application} describes current model interpretation techniques and applies them to the tasks defined in the previous section, and Section \ref{conclusion} concludes.
 
-# Property and Casualty Ratemaking
+# Property and Casualty Ratemaking {#ratemaking}
 
 (overview of p/c ratemaking: what it is, maybe a bit of history of getting from univariate methods to GLMs today, point out that in this paper we're really dealing with the risk classification aspect)
 
-# Interpretability in the Ratemaking Context
+# Interpretability in the Ratemaking Context {#interpretability}
 
 (literature review, settle on a definition to work with, e.g. @doshi-velezRigorousScience2017, identify maybe 3 questions about a model to answer, tie to principles on p/c ratemaking)
 
-# Applying Model Interpretation Techniques
+# Applying Model Interpretation Techniques {#application}
 
 (some definitions, e.g. global/model vs. local/instance, categorize questions accordingly)
 
@@ -53,6 +53,6 @@ If insurers can gain more insight into how ML models behave in risk classificati
 
 (for each question, propose a technique, mention alternative techniques, pros/cons, implement, interpret results)
 
-# Conclusion
+# Conclusion {#conclusion}
 
 (conclude)
