@@ -41,9 +41,42 @@ The rest of this paper is organized as follows: Section \ref{ratemaking} provide
 
 (overview of p/c ratemaking: what it is, maybe a bit of history of getting from univariate methods to GLMs today, point out that in this paper we're really dealing with the risk classification aspect)
 
+-First GLM paper to appear on the syllabus was by Anderson, et al. in 2006?
+-First ML paper... tricky. "cluster analysis" first mentioned in 2011. I think that was the Robertson paper, and he used k-means to cluster the hazard groups for NCCI?
+-First real time ML appears as such is 2018 with the MAS-I and MAS-II exams
+-Machine learning algorithms in a ratemaking context are a very recent phenomenon
+-Brief hand-wavey history of machine learning
+
+
 # Interpretability in the Ratemaking Context {#interpretability}
 
 (literature review, settle on a definition to work with, e.g. @doshi-velezRigorousScience2017, identify maybe 3 questions about a model to answer, tie to principles on p/c ratemaking)
+
+Within the actuarial profession, Actuarial Standard of Practice 41 ("Actuarial Communications") notes that "...another actuary qualified in the same practice area [should be able to] make an objective appraisal of the reasonableness of the actuary's work as presented in the actuarial report." (cite: ASOP 41) Underlying this requirement is an assumption that the hypothetical other actuary qualified in the same practice area is adequately familiar with the relevant techniques employed. Although the syllabus of basic education is constantly changing, there has at times been an assumption that all techniques and assumptions that have ever been a part of the syllabus of basic education needn't be explained from first principles in general actuarial communications, and that an actuary practicing in the same field should be able to make an objective appraisal of the results from the methods found in the syllabus. [This can be supported by reference to the edits to ASOP 38 over time - originally it was designed to be about all models, but they revised it to be about only models that incorporate specialized knowledge outside of the actuary's area of expertise... do we need this citation, though?] This is notable because, beginning with the introduction of the MAS-I and MAS-II examination in July of 2018, several machine learning models were formally included in the syllabus of basic education. These exams cover a wide range of topics, such as splines, clustering algorithms, decision trees, boosting, and principle components analysis. (cite: 2018 syllabus of basic education)
+
+Nevertheless, machine learning poses something of a special challenge for ASOP 41 for several reasons. Machine learning models can be very ad hoc compared to traditional statistical models. Because many machine learning models are deterministic, they may not admit of standard metrics for model comparison (e.g., it's not straightforward to calculate an AIC over a neural network). In addition, machine learning methods are often combined into ensembles that may not be easily separated and that may, as a collection, cease to resemble a single standard version of a model. Complicating matters still further, machine learning models can be "black boxes" insofar as the final form of response curve cannot be easily predicted and may depend heavily on the available data (which may not, in turn, be available to the reviewer).
+
+This last item raises a final interesting issue. Generalized linear models and their ilk are often fitted using one of a handful of standard and well-understood approaches (e.g., maximum likelihood estimation). However, this is not possible in general with machine learning models, as machine learning algorithms often use loss surfaces that are very complex such that it may not be feasible to calculate the global minimum of the surface. Certainly, closed form representations of the loss surfaces are not generally available. For this reason, the training phase of a machine learning model is, in many ways, just as important to one's understanding as the model form and the data on which the model is fitted. Because the final model result is inseparable from these three components (training method, model form, and data), it is not generally adequate to just know the method employed to make an objective appraisal of the reasonableness of the model. More information is necessary.
+
+Of course, these comments only apply to the actuarial profession. Outside of the actuarial profession, communication of results may be more challenging. A survey conducted by the Casualty Actuarial and Statistical Task Force of the National Association of Insurance Commissioners found that ___
+
+-NAIC surveys indicate challenges for regulators in understanding even GLMs
+
+In response to a similar survey in Sping 2017, 33 state regulators noted that it would be helpful or very helpful for the NAIC to develop information and tools to assist in reviewing rate filings based on GLMs, and 34 noted that it would be helpful to develop similar items to assist in reviewing "Other Advanced Modeling Techniques." [cite: Spring Vol I Proceedings of the NAIC]
+
+One outgrowth of this need was the development of a white paper on best practices for regulatory review of predictive models. The white paper focuses on review of GLMs, particularly with respect to private passenger automobile and homeowners' insurance. Some of the guidance offered in this regard is therefore not strictly applicable to the review of machine learning models. For example, as previously noted, p-values are not a concept that translates well to deterministic machine learning algorithms. However, among the guidance applicable to machine learning algorithms are the following (paraphrasing):
+* understand the relationship between the inputs and the expected loss or expense differences in risk,
+* determine that these input characteristics are not unfairly discriminatory, and
+* determine the extent of premium disruption among policyholders and be able to explain the source of premium disruptions. [cite: NAIC white paper]
+
+Note that this list is not exhaustive of the guidance offered by any means, but that these three items are those that are applicable that may present greater challenge for machine learning algorithms compared to GLMs. [By comparison, guidance to understand that the variables are predictive of loss is a common goal of GLMs and ML, and in fact ML kind of gets it "for free" since it's about minimizing prediction error rather than maximizing likelihood. Not sure if this bears mentioning. Could also note the extent to which the NAIC guidance focuses on predictiveness as opposed to p-values. I think it's pretty questionable.]
+
+Depending on the model, machine learning algorithms can be non-linear in the inputs. In areas where data are sparse, the model could generate unnatural response curves that could go undetected by a very high-level view of the model results. This leads to a situation where lift charts or tests on holdout data may indicate that the model is performing adequately, but it may be difficult to explain the reasons for a particular premium indicaton or a change in premium when policy characteristics change.
+
+-For this, we recommend ____ (grid search?)
+-Because the model form may be difficult to represent in the form of a single equation (and harder still to evaluate), one method of evaluating the reasonableness of model results is local approximations of the impact of different rating variables (LIME?)
+
+
 
 # Applying Model Interpretation Techniques {#application}
 
