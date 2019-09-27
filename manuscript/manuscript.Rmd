@@ -71,7 +71,39 @@ It should be noted that communicating results is not simply a method of passing 
 
 # Interpretability in the Ratemaking Context {#interpretability}
 
-(literature review, settle on a definition to work with, e.g. @doshi-velezRigorousScience2017, identify maybe 3 questions about a model to answer, tie to principles on p/c ratemaking)
+In this section, we attempt to develop a working definition of interpretability for ratemaking applications. While we will not provide a comprehensive survey of the prolific and fast evolving ML interpretability literature, we draw from it as appropriate in setting the stage for our discussion. There is not a standard definition of interpretability with consensus from all researchers; here are a few from frequently cited papers:
+
+- Ability to explain or to present in understandable terms to a human [@doshi-velezRigorousScience2017];
+- The degree to which an observer can understand the cause of a decision [@biranExplanationJustification2017]; and
+- A method is interpretable if a user can correctly and efficiently predict the method’s results [@kimExamplesAre2016]. 
+
+We motivate our discussion by considering several aspects of interpretability. For the time being, one can take any of the definitions cited above. As we proceed through the points below, we aim to arrive at a more scoped and relevant definition of what it means to attain interpretability in a pricing model. (TODO: add a sentence mapping out what we'll talk about in this section)
+
+## Not All Linear Models are Interpretable
+
+We look at some examples of models that are considered by many to be interpretable. The GLM is probably the most oft-cited example of such a model (or rather, modeling framework) in the actuarial literature. Given a set of inputs, we can easily reason about what the output of the model is. As an illustrative example, we may have a claims severity model with age, amount of insurance (AOI), and gender as features; assuming a log link function, we have
+
+\begin{equation}
+  \log(E(\text{severity})) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{AOI} + \beta_3 \cdot \text{gender}_{\text{male}}.
+\end{equation}
+
+Here, we can tell, for example, what the model would predict for the expected severity if we were to increase age by a certain amount, *all else being equal*, because the relationship between the feature and the response is simply the coefficient $\beta_1$ and the link function. Another commonly cited example of an interpretable model is a decision tree. An illustrative example is shown in (TODO: FIGURE). Here, the prediction is arrived at by following a sequence of if-else decisions. 
+
+Now, it is worth pointing out that, when declaring that GLM or decision trees are interpretable models, we are implicitly qualifying that we are considering a reasonable number of linear features. In fact, the ease at which we can reason about a model rapidly declines as the number of features and interactions increase, as in the following (somewhat pathological) example:
+
+\begin{equation}\label{eq:badglm}
+  \log(E(\text{severity})) = \beta_0 + \beta_1 \cdot \text{AOI}  + \beta_2\cdot\text{age} + \beta_3\cdot\text{age}^2 + \beta_4 \cdot \text{age:AOI} + \beta_5 \cdot \text{gender}_{\text{male}}.
+\end{equation}
+
+Similarly, one can see that in (TODO: FIGURE), large and deep trees are tough to reason about. In other words, even when working within the framework of an "interpretable" class of models, we may still end up with something that many would consider "black box."
+
+## The Machinery is Not a Secret
+
+An occasional misconception is that we have no visibility into how some ML models *compute* predictions, which render them uninterpretable. Outside of proprietary algorithms, all common ML models, including neural networks, gradient boosted trees, and random forests, are well studied and have large bodies of literature documenting their inner workings. As an example, a fitted neural network model on tabular data is simply a composition of linear transformations followed with nonlinear activation functions. As in Equation \ref{eq:badglm}, one can write down the mathematical equation for calculating the prediction given some inputs, but it may be difficult for a human to reason about it. This is a somewhat philosophical point, as we show later in the paper that we can still provide explanations of completely "black box" models, but is important to note given that pricing models undergo regulatory scrutiny.
+
+## Explanations are Social
+
+Proposed by @hiltonConversationalProcesses1990 and interpreted by @millerExplanationArtificial2017 in the context of ML, model explanations are conversations or social interactions. One consequence of this identification is that explanations need to be *relevant* to the *audience*. In developing, filing, and operationalizing a pricing model, one needs to accommodate a variety of stakeholders, each of whom has a different set of questions, assumptions, and technical capacity. First, there are internal stakeholders at the company, which includes management and underwriters. While some of the individuals in this audience may be technical, they are likely less familiar with predictive modeling techniques than the actuaries and data scientists who build the models. (TODO: what's a representative question here?) Next, we have the regulators, who may have limited resources to review the models, and will focus on a specific list of questions. 
 
 Within the actuarial profession, Actuarial Standard of Practice 41 ("Actuarial Communications") notes that "...another actuary qualified in the same practice area [should be able to] make an objective appraisal of the reasonableness of the actuary's work as presented in the actuarial report." [@asop_41] Underlying this requirement is an assumption that the hypothetical other actuary qualified in the same practice area is adequately familiar with the relevant techniques employed. Although the syllabus of basic education is constantly changing, there has at times been an assumption that all techniques and assumptions that have ever been a part of the syllabus of basic education needn't be explained from first principles in general actuarial communications, and that an actuary practicing in the same field should be able to make an objective appraisal of the results from the methods found in the syllabus. [This can be supported by reference to the edits to ASOP 38 over time - originally it was designed to be about all models, but they revised it to be about only models that incorporate specialized knowledge outside of the actuary's area of expertise... do we need this citation, though?] This is notable because, beginning with the introduction of the MAS-I and MAS-II examination in July of 2018, several machine learning models were formally included in the syllabus of basic education. These exams cover a wide range of topics, such as splines, clustering algorithms, decision trees, boosting, and principle components analysis. [@cas_syllabus_2018]
 
