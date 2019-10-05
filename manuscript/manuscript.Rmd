@@ -88,12 +88,7 @@ explain the disruption to individual consumers that inquire about it.
 differences in risk. Each input characteristic should have an intuitive or demonstrable actual relationship to expected loss or expense.
 * Determine that individual outputs from a predictive model and their associated selected relativities are not unfairly discriminatory.
 
-Note that this list is not exhaustive of the guidance offered by any means, but that these three items are those that may present greater challenge for machine learning algorithms compared to GLMs. 
-
-Depending on the model, machine learning algorithms can be non-linear in the inputs. In areas where data are sparse, the model could generate unnatural response curves that could go undetected by a very high-level view of the model results. This leads to a situation where lift charts or tests on holdout data may indicate that the model is performing adequately, but it may be difficult to explain the reasons for a particular premium indicaton or a change in premium when policy characteristics change.
-
--For this, we recommend ____ (grid search?)
--Because the model form may be difficult to represent in the form of a single equation (and harder still to evaluate), one method of evaluating the reasonableness of model results is local approximations of the impact of different rating variables (LIME?)
+These items are by no means exhaustive, but they pertain to the concept of model interpretability for ratemaking that we develop next.
 
 # Interpretability in the Ratemaking Context {#interpretability}
 
