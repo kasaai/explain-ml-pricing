@@ -3,7 +3,6 @@ library(DALEX)
 library(ggplot2)
 library(scales)
 
-
 pins::board_register_github(name = "cork", repo = "kasaai/cork")
 testing_data <- pins::pin_get("toy-model-testing-data", board = "cork")
 piggyback::pb_download(file = "model_artifacts/toy-model.tar.gz", repo = "kasaai/cork")
@@ -33,13 +32,15 @@ pdp_vehicle_age <- ingredients::partial_dependency(
   N = 1500
 )
 
-as.data.frame(pdp_vehicle_age) %>% 
+pdp_plot <- as.data.frame(pdp_vehicle_age) %>% 
   ggplot(aes(x = `_x_`, y = `_yhat_`)) + 
   geom_line() +
   xlab("Vehicle Age") +
   ylab("Average Predicted Loss Cost") +
   theme_bw() +
   geom_rug(sides = "b")
+
+ggsave("manuscript/figures/pdp-plot.png", plot = pdp_plot)
 
 fi <- ingredients::feature_importance(
   explainer_nn,
@@ -54,7 +55,7 @@ fi <- ingredients::feature_importance(
   n_sample = 50000
 )
 
-fi %>% 
+fi_plot <- fi %>% 
   as.data.frame() %>% 
   (function(df) {
     full_model_loss <- df %>% 
@@ -75,6 +76,8 @@ fi %>%
       NULL
   })
 
+ggsave("manuscript/figures/fi-plot.png", plot = fi_plot)
+
 sample_row <- testing_data[1,] %>% 
   select(predictors)
 breakdown <- iBreakDown::break_down(explainer_nn, sample_row)
@@ -88,7 +91,7 @@ df <- breakdown %>%
                      paste0("+", .x),
                      .x))
 
-p <- df %>% 
+breakdown_plot <- df %>% 
   ggplot(aes(reorder(variable, position), fill = sign,
              xmin = position - 0.40, 
              xmax = position + 0.40, 
@@ -112,16 +115,15 @@ p <- df %>%
   coord_flip() +
   theme_bw() +
   theme(legend.position = "none") + 
-  NULL
-p + geom_text(
-  aes(label = label, 
-      y = pmax(df$cummulative,  df$cummulative - df$contribution)), 
-  nudge_y = 10,
-  hjust = "inward", 
-  color = "black"
-) +
+  geom_text(
+    aes(label = label, 
+        y = pmax(df$cummulative,  df$cummulative - df$contribution)), 
+    nudge_y = 10,
+    hjust = "inward", 
+    color = "black"
+  ) +
   xlab("Variable") +
   ylab("Contribution") +
   theme(axis.text.y = element_text(size = 10))
 
-
+ggsave("manuscript/figures/breakdown-plot.png", plot = breakdown_plot)
