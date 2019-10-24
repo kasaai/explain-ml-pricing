@@ -6,4 +6,6 @@ Imports:
   tinytex, 
   withr,
   rmarkdown,
-  rticles
+  rticles,
+  bookdown,
+  knitr
