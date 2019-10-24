@@ -101,11 +101,12 @@ We motivate our discussion by considering several aspects of interpretability. A
 
 ## Not All Linear Models are Interpretable {#linear-models}
 
-Let us look at some examples of models that are considered by many to be interpretable. The GLM is probably the most oft-cited example of such a model (or rather, modeling framework) in the actuarial literature. Given a set of inputs, we can easily reason about what the output of the model is. As an illustrative example, we may have a claims severity model with driver age, amount of insurance (AOI), and sex as features; assuming a log link function, we have
+Let us look at some examples of models that are considered by many to be interpretable. The GLM is probably the most oft-cited example of such a model (or rather, modeling framework) in the actuarial literature. Given a set of inputs, we can easily reason about what the output of the model is. As an illustrative example, we may have a claims severity model with driver age, sex, and vehicle age as features; assuming a log link function and $Y$ denotes the response, we have
 
-\begin{equation}
-  \log(E(\text{severity})) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{AOI} + \beta_3 \cdot \text{sex}_{\text{male}}.
-\end{equation}
+\begin{align}
+& \log(E[Y]) = \beta_0 + \beta_1 \cdot \text{age} \nonumber \\
+& \quad + \beta_2 \cdot \text{vehicle\_age} + \beta_3 \cdot \text{sex}_{\text{male}}.
+\end{align}
 
 Here, we can tell, for example, what the model would predict for the expected severity if we were to increase age by a certain amount, *all else being equal*, because the relationship between the feature and the response is simply the coefficient $\beta_1$ and the link function. Another commonly cited example of an interpretable model is a decision tree. An illustrative example is shown in Figure \@ref(fig:tree-plot1). Here, the prediction is arrived at by following a sequence of if-else decisions.
 
@@ -115,9 +116,12 @@ knitr::include_graphics("figures/tree-plot1.png")
 
 Now, it is worth pointing out that, when declaring that GLM or decision trees are interpretable models, we are implicitly qualifying that we are considering a reasonable number of linear features. In fact, the ease at which we can reason about a model rapidly declines as the number of features and interactions increase, as in the following (somewhat pathological) example:
 
-\begin{equation}\label{eq:badglm}
-  \log(E(\text{severity})) = \beta_0 + \beta_1 \cdot \text{AOI}  + \beta_2\cdot\text{age} + \beta_3\cdot\text{age}^2 + \beta_4 \cdot \text{age:AOI} + \beta_5 \cdot \text{gender}_{\text{male}}.
-\end{equation}
+\begin{align}\label{eq:badglm}
+& \log(E[Y]) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{vehicle\_age} \nonumber\\
+& \quad + \beta_3\cdot\text{vehicle\_age}^2 \nonumber \\
+& \quad + \beta_4 \cdot \text{age} \cdot \text{vehicle\_age} \nonumber \\
+& \quad + \beta_5 \cdot \text{sex}_{\text{male}} + \beta_6 \cdot \text{sex}_{\text{male}} \cdot \text{age}. 
+\end{align}
 
 Similarly, one can see that in Figure \@ref(fig:tree-plot2), large and deep trees are tough to reason about. In other words, even when working within the framework of an "interpretable" class of models, we may still end up with something that many would consider "black box."
 
@@ -231,9 +235,10 @@ Formally, for a fitted model $\widehat{f}$ and a specific instance $x_*$, we wou
 
 where $v(j, x_*)$ denotes the contribution of the $j$th variable in instance $x_*$, defined as
 
-\begin{equation}\label{eq:var-contrib}
-v(j, x_* ) = E_X[\widehat{f}(X) | X^1 = x_* ^1, \dots, X^j = x_* ^j] - E_X[\widehat{f}(X^1 = x_* ^1, \dots, X^{j-1} = x_*^{j - 1})].
-\end{equation}
+\begin{align}\label{eq:var-contrib}
+& v(j, x_* ) = E_X[\widehat{f}(X) | X^1 = x_* ^1, \dots, X^j = x_* ^j] \nonumber\\
+& \quad - E_X[\widehat{f}(X^1 = x_* ^1, \dots, X^{j-1} = x_*^{j - 1})].
+\end{align}
 
 Hence, the contribution of the $j$th variable to the prediction is the incremental change in the expected model prediction when we set $X^j = x_*^ j$ assuming the other variables take their values in $x_*$. Note here that this definition implies that the order in which we consider the variables affects the results. Empirically, the expectations in \@ref(eq:var-contrib) are calculated by sampling the test dataset.
 
