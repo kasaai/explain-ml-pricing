@@ -257,6 +257,11 @@ Instance-level explanations are useful for investigating specific problematic pr
 
 (TODO)
 
+Acknowledgments {.unnumbered}
+==========
+
+This work is supported by the Casualty Actuarial Society.
+
 References {#references .unnumbered}
 ==========
 <div id="refs"></div>
@@ -266,14 +271,41 @@ References {#references .unnumbered}
 Appendix {.unnumbered}
 =============
 
-# ML Model Development {#model-dev}
 
-In this appendix, we describe the ML model and the data used to train it. Note that, for our paper, the ultimate goal of the modeling procedure is to develop something that can produce predictions. As a result, we do not follow standard practices for supervised learning model development. However, for the sake of completeness and reproducibility, we include the details of the process here.
+```{r variables, results='asis', echo = FALSE}
+library(magrittr)
+variables <- tibble::tribble(
+  ~ Variable, ~ Type, ~ Transformation,
+  "Age range", "Categorical", "One-hot encode",
+  "Sex", "Categorical", "One-hot encode",
+  "Vehicle category", "Categorical", "One-hot encode",
+  "Make", "Categorical", "Embed in $\\mathbb{R}^2$",
+  "Vehicle age", "Numeric", "Center and scale",
+  "Region", "Categorical", "Embed in $\\mathbb{R}^2$"
+)
+knitr::kable(
+  variables,
+  caption = 'Input variables and their transformations.',
+  booktabs = TRUE, 
+  table.env='table',
+  escape = FALSE,
+  linesep = ""
+) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+
+# Model Development {#model-dev}
+
+In this appendix, we describe the ML model and the data used to train it. Note that, for our paper, the ultimate goal of the modeling procedure is to develop something that can produce predictions. As a result, we do not follow standard practices for supervised learning model development. However, for the sake of completeness and reproducibility, we include an overview of the process here. Implementation is done using the R [@rlang] interface to TensorFlow [@tensorflow2015-whitepaper]. The model explanation visualizations utilize the implemention by @biecekPMVEE, and the code to reproduce them are available on GitHub[^1].
+
+[^1]: https://github.com/kasaai/explain-ml-pricing
 
 ## Data
 
-We use data from the AUTOSEG ("Automobile Statistics System") of Brazil's Superintendence of Private Insurance (SUSEP). The organization maintains policy-characteristics-level data, including claim counts and amounts, for all insured automobiles in Brazil. The data contains variables from policyholder characteristics to losses by peril. (TODO: finish)
+We use data from the AUTOSEG ("Automobile Statistics System") of Brazil's Superintendence of Private Insurance (SUSEP). The organization maintains policy-characteristics-level data, including claim counts and amounts, for all insured automobiles in Brazil. The data contains variables from policyholder characteristics to losses by peril. We use the records from the first half of 2012, which contains 1,707,651 records. One-fifth of the data is reserved for testing; the remainder is further split into 3/4 of analysis and 1/4 into assessment for determining early stopping.
 
 ## Model
 
-(TODO)
+Table \@ref(tab:variables) shows the input variables to our model and their associated transformations. For "make" and "region", we map each level to a point in $\mathbb{R}^2$ through embedding layers. The model is a feedforward neural network with two hidden layers with 64 units each. The activations for the hidden layers are ReLU while for the output layer it is softplus. Exposures for each record are used as sample weights during training. We fit the model via ADAM with an initial learning rate of 0.1, a mini-batch size of 10,000, and trigger early stopping when the mean squared error on the asssessment set does not improve for five epochs.
+
