@@ -97,24 +97,24 @@ In this section, we attempt to develop a working definition of interpretability 
 - The degree to which an observer can understand the cause of a decision [@biranExplanationJustification2017]; and
 - A method is interpretable if a user can correctly and efficiently predict the method’s results [@kimExamplesAre2016]. 
 
-We motivate our discussion by considering several aspects of interpretability. As we proceed through the points below, we aim to arrive at a more scoped and relevant definition of what it means to attain interpretability in a pricing model. We first clarify a couple concepts regarding interpretable *classes* of models and and the computational transparency of ML models. We then emphasize findings on the social aspects of ML explanations most relevant to our use case. With the provided background, we discuss a potential framework for implementing ML interpretability in practice.
+We motivate our discussion by considering several aspects of interpretability. As we proceed through the points below, we aim to arrive at a more scoped and relevant definition of what it means to attain interpretability in a pricing model. In the remainder of this section, we clarify a couple concepts regarding interpretable *classes* of models and and the computational transparency of ML models, outline findings on the social aspects of ML explanations most relevant to our use case, then discuss a potential framework for implementing ML interpretability in practice.
 
 ## Not All Linear Models are Interpretable {#linear-models}
 
-Let us look at some examples of models that are considered by many to be interpretable. The GLM is probably the most oft-cited example of such a model (or rather, modeling framework) in the actuarial literature. Given a set of inputs, we can easily reason about what the output of the model is. As an illustrative example, we may have a claims severity model with driver age, sex, and vehicle age as features; assuming a log link function and $Y$ denotes the response, we have
+Let us look at some examples of models that are considered by many to be interpretable. The GLM is probably the most oft-cited example of such a model (or rather, modeling framework) in the actuarial literature. Given a set of inputs, we can easily reason about what the output of the model is. As an illustrative example, consider a claim severity model with driver age, sex, and vehicle age as features; assuming a log link function and letting $Y$ denotes the response, we have
 
 \begin{align}
 & \log(E[Y]) = \beta_0 + \beta_1 \cdot \text{age} \nonumber \\
 & \quad + \beta_2 \cdot \text{vehicle\_age} + \beta_3 \cdot \text{sex}_{\text{male}}.
 \end{align}
 
-Here, we can tell, for example, what the model would predict for the expected severity if we were to increase age by a certain amount, *all else being equal*, because the relationship between the feature and the response is simply the coefficient $\beta_1$ and the link function. Another commonly cited example of an interpretable model is a decision tree. An illustrative example is shown in Figure \@ref(fig:tree-plot1). Here, the prediction is arrived at by following a sequence of if-else decisions.
+Here, we can tell, for example, what the model would predict for the expected severity if we were to increase age by a certain amount, *all else being equal*, because the relationship between the feature and the response is simply multiplication by the coefficient $\beta_1$ and applying the inverse link function. Another commonly cited example of an interpretable model is a decision tree. An illustrative example is shown in Figure \@ref(fig:tree-plot1). Here, the prediction is arrived at by following a sequence of if-else decisions.
 
 ```{r tree-plot1, echo = FALSE, fig.cap="A simple decision tree for loss cost prediction.", out.width="100%", fig.align='center'}
 knitr::include_graphics("figures/tree-plot1.png")
 ```
 
-Now, it is worth pointing out that, when declaring that GLM or decision trees are interpretable models, we are implicitly qualifying that we are considering a reasonable number of linear features. In fact, the ease at which we can reason about a model rapidly declines as the number of features and interactions increase, as in the following (somewhat pathological) example:
+Now, it is worth pointing out that, when declaring that GLM or decision trees are interpretable models, we are implicitly assuming that we are considering only a handful  of features. In fact, the ease at which we can reason about a model rapidly declines as the number of features, transformations, and interactions increase, as in the following (somewhat pathological) example:
 
 \begin{align}\label{eq:badglm}
 & \log(E[Y]) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{vehicle\_age} \nonumber\\
@@ -125,13 +125,13 @@ Now, it is worth pointing out that, when declaring that GLM or decision trees ar
 
 Similarly, one can see that in Figure \@ref(fig:tree-plot2), large and deep trees are tough to reason about. In other words, even when working within the framework of an "interpretable" class of models, we may still end up with something that many would consider "black box."
 
-```{r tree-plot2, echo = FALSE, fig.cap="A more complex decision tree for loss cost prediction.", out.width="60%", fig.align='center',  fig.env='figure*'}
+```{r tree-plot2, echo = FALSE, fig.cap="A more complex decision tree. This is still much simpler than typical realistic examples.", out.width="60%", fig.align='center',  fig.env='figure*'}
 knitr::include_graphics("figures/tree-plot2.png")
 ```
 
 ## The Machinery is Not a Secret
 
-Another occasional misconception is that we have no visibility into how some ML models *compute* predictions, which render them uninterpretable. Outside of proprietary algorithms, all common ML models, including neural networks, gradient boosted trees, and random forests, are well studied and have large bodies of literature documenting their inner workings. As an example, a fitted neural network model on tabular data is simply a composition of linear transformations followed with nonlinear activation functions. As in Equation \ref{eq:badglm}, one can write down the mathematical equation for calculating the prediction given some inputs, but it may be difficult for a human to reason about it. We show later that we can still provide explanations of completely "black box" models, but is important to note that ML model predictions are still governed by mathematical rules, given that pricing models undergo regulatory scrutiny.
+Another occasional misconception is that we have no visibility into how some ML models *compute* predictions, which render them uninterpretable. Outside of proprietary algorithms, all common ML models, including neural networks, gradient boosted trees, and random forests, are well studied and have large bodies of literature documenting their inner workings. As an example, a fitted neural network model on tabular data is simply a composition of linear transformations followed with nonlinear activation functions. As in Equation \ref{eq:badglm}, one can write down the mathematical equation for calculating the prediction given some inputs, but it may be difficult for a human to reason about it. We show later that we can still provide explanations of completely "black box" models, but is important to note that ML model predictions are still governed by mathematical rules.
 
 ## Explanations are Contextual
 
@@ -143,7 +143,7 @@ Another point outlined in Miller's survey [@millerExplanationArtificial2017] is 
 
 ## Asking and Answering the Right Questions
 
-With the above considerations in mind, we propose a potential framework for interpreting ML models for insurance pricing: the actuarial profession, in collaboration with regulators, define a set of questions to be answered by explanations accompanying ML models, along with acceptance criteria and examples of successful explanations. In other words, interpretability for our purposes is defined as the ability of a model's explanations to answer the posed questions.
+With the above considerations in mind, we propose a potential framework for interpreting ML models for insurance pricing: the actuarial profession, in collaboration with regulators and representatives of the public, define a set of questions to be answered by explanations accompanying ML models, along with acceptance criteria and examples of successful explanations. In other words, interpretability for our purposes is defined as the ability of a model's explanations to answer the posed questions.
 
 These questions should relate to existing guidelines, such as those described in @naic_white_paper and outlined in Section \ref{need}, standards of practice, and regulation, and in fact should not be specific only to ML models. By standardizing on a set of questions, we reduce the burden of both companies and regulators; this is especially important for the latter, who are already resource constrained facing increasing variety of models being filed. This format should also be familiar to actuaries who are accustomed to adhering to specific guidelines in, for example, ASOPs. Like the ASOPs, We envision that these questions and guidelines will be continually updated to reflect feedback obtained and advances in research.
 
@@ -151,21 +151,21 @@ While the realization of a set of such guidelines is an ambitious undertaking be
 
 # Applying Model Interpretation Techniques {#application}
 
-Now that we have established a framework for model interpretation in the form of asking and answering relevant questions, we demonstrate examples of such exchanges via an illustrative case study. Analytically, our starting point is a fitted deep neural network model for predicting loss costs. As the modeling details are of secondary importance, they are available in the appendix (TODO: add appendix and link to it.) The questions that we ask of the model are as follows:
+Now that we have established a framework for model interpretation in the form of asking and answering relevant questions, we demonstrate examples of such exchanges via an illustrative case study. Analytically, our starting point is a fitted deep neural network model for predicting loss costs. As the modeling details are of secondary importance, they are available in Appendix \@ref{model-dev}. The questions that we ask of the model are as follows:
 
 1. What are the most important predictors in the model?
 2. How does the predicted loss cost change, on average, as we change an input?
 3. For a particular policyholder, how does each characteristic contribute to the loss cost prediction?
 
+In our discussion, we adopt the organization of techniques and some notation presented in @molnar2018interpretable and @biecekPMVEE, which are comprehensive references on the most established ML interpretation techniques.
+
 ## A Simplified View of Interpretation Techniques
 
-(TODO: add citation to interpretable ml book)
-
-Before we dive into the answering questions, we provide some background on model interpretation techniques. As the literature is quite sizeable and fast moving, we do not attempt a full taxomony of techniques. The goal is to orient ourselves among broad categories of techniques, so we can map them to tasks indicated by the questions being asked. We classify model interpretation techniques across two dimensions: intrinsic vs. post-hoc and global vs. local.
+Before we dive into the answering questions, we provide some background on model interpretation techniques. As the literature is quite sizeable and fast moving, we do not attempt a full taxomony of techniques. The goal is to orient ourselves among broad categories of techniques, so we can map them to tasks indicated by the questions being asked. Model interpretation techniques can be categorized across two dimensions: intrinsic vs. post-hoc and global vs. local.
 
 ### Intrinsic vs. Post-hoc
 
-Intrinsic model interpretation draws conclusions from the structure of the fitted model and are what we typically associate with "interpretable" classes of models. This is only viable with models with simple structures, such as the sparse linear model and shallow decision tree we see in Section \ref{linear-models}, where we arrive at explanations by reading off parameter estimates or a few decision rules. For algorithms that produce models with complex structure that do not lend themselves easily to intrinsic exploration, we can appeal to post-hoc techniques. This class of techniques interrogate the model by presenting it with data for and observing the prediction behavior of the model. These techniques are concerned with only the inputs and outputs, and hence are *agnostic* of the model itself, which means they can be applied also to simple models. Since most useful ML models have a level of complexity beyond the threshold of intrinsic interpretability, we focus on model-agnostic techniques in our case study. As we will see later on, the data that we present to the models are usually some perturbed variations of test data.
+Intrinsic model interpretation draws conclusions from the structure of the fitted model and are what we typically associate with "interpretable" classes of models. This is only viable with models with simple structures, such as the sparse linear model and shallow decision tree we see in Section \ref{linear-models}, where we arrive at explanations by reading off parameter estimates or a few decision rules. For algorithms that produce models with complex structure that do not lend themselves easily to intrinsic exploration, we can appeal to post-hoc techniques. This class of techniques interrogate the model by presenting it with data for and observing the prediction behavior of the model. These techniques are concerned with only the inputs and outputs, and hence are *agnostic* of the model itself, which means they can also be applied to simple models. Since most useful ML models have a level of complexity beyond the threshold of intrinsic interpretability, we focus on model-agnostic techniques in our case study. As we will see later on, the data that we present to the models are usually some perturbed variations of test data.
 
 ### Global vs. Local
 
@@ -173,11 +173,11 @@ Along the other dimension, we categorize model interpretations as global, or mod
 
 ## Answering the Questions
 
-Having aligned the questions with the categories of interpretation techniques, we now introduce a sample of appropriate techniques to answer them.
+Having aligned the questions with the categories of interpretation techniques, we now introduce a selection of appropriate techniques to answer them.
 
 ### Variable Importance
 
-> "What are the most important predictors in the model?"
+"What are the most important predictors in the model?"
 
 For linear models and their generalizations, and some ML models, measures of variable importance can be obtained from the fitted model structure. In the case of GLMs, one can observe the magnitudes of the $t$-statistics, whereas for random forests, one can use out-of-bag errors [@breimanRandomForests2001]. For more complex models, such as the neural network in our case study, we need to devise another approach.
 
@@ -185,7 +185,7 @@ We follow the methodology of permutation feature importance as described in @fis
 
 More formally, let $y$ denote the vector of responses, $X$ denote the matrix of predictor variables, $\widehat{f}$ denote the fitted model, and $L = \mathcal{L}(\widehat{f}(X), y)$ denote the value of the loss function, which is mean squared error in the case of regression. Now, if $\widetilde{X}^{j}$ denotes the predictor matrix where the $j$th variable has been permutated, then we can compute the loss with the permuted dataset as $L^{-j} = \mathcal{L}(\widehat{f}(\widetilde{X}^{j}), y)$. With this, we define the absolute variable importance $VI^{j}$ as $L^{-j} - L$ or the relative variable importance as $VI_{R}^{j} = \frac{L^{-j}}{L}$. 
 
-In Figure \@ref(fig:fi), we show a plot of variable importances. We see that FOO and BAR are the most important variables in terms of contributing accuracy to our model. Note that these measures do not provide information regarding the directional sensitivity of the predictors on the response. In our particular example, we see that the "make" variable contributes most to the accuracy of the model with "sex" contributing the least. This provides a way for the audience to quickly glance at the most relevant variables, and ask further question as necessary. For example, if a variable that can potentially be a proxy for a discriminatory variable appears as very important, more investigation would be warranted.
+In Figure \@ref(fig:fi), we show a plot of variable importances. In our particular example, we see that the "make" variable contributes most to the accuracy of the model with "sex" contributing the least. Note that these measures do not provide information regarding the directional sensitivity of the predictors on the response. This provides a way for the audience to quickly glance at the most relevant variables, and ask further question as necessary. For example, if a variable that can potentially be a proxy for a discriminatory variable appears as very important, more investigation would be warranted.
 
 ```{r fi, out.width='100%', fig.align = "center", fig.cap="Permutation feature importances for ML model.", echo = FALSE}
 knitr::include_graphics("figures/fi-plot.png")
@@ -193,7 +193,7 @@ knitr::include_graphics("figures/fi-plot.png")
 
 ### Partial Dependence Plots
 
-> "How does the predicted loss cost change, on average, as we change an input?"
+"How does the predicted loss cost change, on average, as we change an input?"
 
 For this question, we again consider first how it would be answered in the GLM setting. When the input predictor in question is continuous, we can answer the question by looking at the estimated coefficient, which provides the change in the response per unit change in the predictor (on the scale of the linear predictor). For non-parametric models and neural networks, where no coefficients are available, we can appeal to partial dependence plots (PDP), first proposed by @friedmanGreedyFunction2001 for gradient boosting machines (GBM).
 
@@ -205,7 +205,7 @@ knitr::include_graphics("figures/pdp-plot.png")
 knitr::include_graphics("figures/breakdown-plot.png")
 ```
 
-To describe PDP, we first introduce some notation. Let $x^j$ denote the input variable of interest. Then we define the partial dependence function as
+To describe PDP, we need to introduce some additional notation. Let $x^j$ denote the input variable of interest. Then we define the partial dependence function as
 
 \begin{equation}
 h(z) = E_{X^{-j}}[\widehat{f}(x|x^j = z)],
@@ -214,15 +214,18 @@ h(z) = E_{X^{-j}}[\widehat{f}(x|x^j = z)],
 where the expectation is taken over the distribution of the other predictor variables. In other words, we marginalize them out so we can focus on the relationship between the predicted response and the variable of interest. Empirically, we estimate $h$ by
 
 \begin{equation}
-\widehat{h}(z) = \frac{1}{N}\sum_{i = 1}^{N}\widehat{f}(x_i|x_i^{j} = z).
+\widehat{h}(z) = \frac{1}{N}\sum_{i = 1}^{N}\widehat{f}(x_i|x_i^{j} = z),
 \end{equation}
 
-In Figure \@ref(fig:pdp), we exhibit the PDP for the "vehicle age" variable. We see that the average predicted loss cost decreases with vehicle age until the latter is around 18. Note that the ticks on the axis tell us that the data is quite thin for vehicle age > 18, so the apparent upward trend to the right is driven by just a few data points. With this in mind, we can conclude that as cars get older, we expect the loss cost predictions generated by our model to decrease.
+where $N$ is the number of records in our dataset.
 
+In Figure \@ref(fig:pdp), we exhibit the PDP for the "vehicle age" variable. We see that the average predicted loss cost decreases with vehicle age until the latter is around 18. Note that the ticks on the $x$-axis tell us that the data is quite thin for vehicle age greater than 18, so the apparent upward trend to the right is driven by just a few data points. With this in mind, we can conclude that as cars get older, we expect the loss cost predictions generated by our model to decrease.
+
+The question posed here is particularly important for regulators, who would like to know whether each variable affects the prediction in the direction that is expected, based on intuition, experience, and existing models. During the model development stage, PDP can also be used as a reasonableness test for candidate models by identifying unexpected relationships for the analyst to investigate.
 
 ### Variable Attribution
 
-> "For a particular policyholder, how does each characteristic contribute to the loss cost prediction?"
+"For a particular policyholder, how does each characteristic contribute to the loss cost prediction?"
 
 In the previous two examples, we look at model-level explanations; now we move on to one where we investigate one particular prediction instance. As before, we consider how we would approach the question for linear models. For a GLM with a log link common in ratemaking applications, for example, we simply start with the base rate, then the exponentiated coefficients would have multiplicative effects on the final rate. Similar to the previous examples, for ML models in general we do not have directly interpretable weights. Instead, one way to arrive at variable contributions is calculating the change in the expected model prediction for each predictor, conditioned on other predictors. 
 
@@ -244,7 +247,15 @@ Hence, the contribution of the $j$th variable to the prediction is the increment
 
 In Figure \@ref(fig:breakdown) we exhibit a waterfall plot of variable contributions. The "intercept" value denotes the average model prediction. The predicted loss cost for this particular policyholder is slightly less than average; the characteristics that makes this policyholder more risky are the fact that he is a male between the ages of 18 and 25; counteracting the risky driver characteristics are the vehicle properties: it is a GM vehicle built domestically and is seven years old.
 
+Instance-level explanations are useful for investigating specific problematic predictions generated by the model. Regulators and model reviewers may be interested in variable contributions for the safest and riskiest policyholders to see if they conform to intuition. A policyholder with a particularly high premium may wish to find out what of their characteristics contribute to it, and may follow up with a question about how he can lower it, which would require another type of explanation.
+
+## Other Techniques
+
+(TODO: briefly discuss other stuff no covered)
+
 # Conclusion {#conclusion}
+
+(TODO)
 
 References {#references .unnumbered}
 ==========
@@ -255,14 +266,14 @@ References {#references .unnumbered}
 Appendix {.unnumbered}
 =============
 
-# ML Model Development
+# ML Model Development {#model-dev}
 
 In this appendix, we describe the ML model and the data used to train it. Note that, for our paper, the ultimate goal of the modeling procedure is to develop something that can produce predictions. As a result, we do not follow standard practices for supervised learning model development. However, for the sake of completeness and reproducibility, we include the details of the process here.
 
 ## Data
 
-We use data from the AUTOSEG ("Automobile Statistics System") of Brazil's Superintendence of Private Insurance (SUSEP). The organization maintains policy-characteristics-level data, including claim counts and amounts, for all insured automobiles in Brazil. The data contains variables from policyholder characteristics to losses by peril.
+We use data from the AUTOSEG ("Automobile Statistics System") of Brazil's Superintendence of Private Insurance (SUSEP). The organization maintains policy-characteristics-level data, including claim counts and amounts, for all insured automobiles in Brazil. The data contains variables from policyholder characteristics to losses by peril. (TODO: finish)
 
 ## Model
 
-Model
+(TODO)
