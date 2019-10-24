@@ -1,40 +1,31 @@
 ---
-title: |
- Towards Explainability of Machine Learning Models in Insurance Pricing
-type: WIP DRAFT 
+title: Towards Explainability of Machine Learning Models in Insurance Pricing
 author:
   - name: Kevin Kuo
-    affil: a
     email: kevin@kasa.ai
+    affiliation: a
+    footnote: Corresponding Author
   - name: Daniel Lupton
-    affil: b
     email: dlupton@taylorandmulder.com
-affiliation:
-  - num: a
-    address: |
-      Kasa AI,
-      3040 78th Ave SE #1271,
-      Mercer Island, WA 98040, USA
-  - num: b
-    address: |
-      Taylor & Mulder,
-      10508 Rivers Bend Lane,
-      Potomac, MD 20854, USA
-bibliography: explain-pricing.bib
-appendix: appendix.tex
-citation_package: bibtex
+    affiliation: b
+address:
+  - code: a
+    address: Kasa AI, 3040 78th Ave SE \#1271, Mercer Island, WA 98040, USA
+  - code: b
+    address: Taylor & Mulder, 10508 Rivers Bend Lane, Potomac, MD 20854, USA
 abstract: |
-  Abstract tbd
-keywords: |
-  actuarial science; general insurance
-header-includes: |
-  \usepackage{hyperref}
-  \usepackage[utf8]{inputenc}
-  \def\tightlist{}
+  Machine learning methods have garnered increasing interest among actuaries in recent years. However, their adoption by practitioners has been limited, partly due to the lack of transparency of these methods, as compared to generalized linear models. In this paper, we discuss the need for model interpretability in property & casualty insurance ratemaking, propose a framework for explaining models, and present a case study to illustrate the framework.
+
+journal: "[journal]"
+date: "`r Sys.Date()`"
+bibliography: explain-pricing.bib
+#linenumbers: true
+numbersections: true
+# csl: elsevier-harvard.csl
 output: 
   bookdown::pdf_book:
-    base_format: rticles::tf_article
-    number_sections: true
+    base_format: rticles::elsevier_article
+layout: preprint, 3p, twocolumn, letterpaper, 12pt
 ---
 
 # Introduction
@@ -57,7 +48,7 @@ Arguably, GLMs predate minimum bias procedures by a significant margin. The term
 
 ## Machine Learning in Ratemaking
 
-Paralelling the development of GLM was the development of machine learning algorithms throughout the middle part of the 20th century. Detailed histories of machine learning may be found in sources such as @Nilsson_2009 and @wang_raj_2017. Consistent with GLMs, machine learning was relatively unpopular in actuarial science until the last ten years as computing power has become cheaper and more easily available and as machine learning software packages have obviated the need for developing analyses from scratch each time an analysis is performed. Due to the breadth of machine learning as a field, it is difficult to identify the first time it entered the CAS syllabus; however, cluster analysis (in the form of k-means) seems to have been first included in 2011 with @robertson_2009. More recently, the MAS-I and MAS-II exams introduced in 2018 have included machine learning explicitly.
+Paralelling the development of GLM was the development of machine learning algorithms throughout the middle part of the 20th century. Detailed histories of machine learning may be found in sources such as @nilsson_2009 and @wang_raj_2017. Consistent with GLMs, machine learning was relatively unpopular in actuarial science until the last ten years as computing power has become cheaper and more easily available and as machine learning software packages have obviated the need for developing analyses from scratch each time an analysis is performed. Due to the breadth of machine learning as a field, it is difficult to identify the first time it entered the CAS syllabus; however, cluster analysis (in the form of k-means) seems to have been first included in 2011 with @robertson_2009. More recently, the MAS-I and MAS-II exams introduced in 2018 have included machine learning explicitly.
 
 Within the area of ratemaking, machine learning is still in its infancy. A significant portion of machine learning applications to ratemaking has been in the context of automobile telematics, such as @gao_2018, @gao_2018_2, @gao_2019, @roel_2018, or @wuthrich_2017. Presumably this focus has been a result of the high-dimensionality and complexity of telematics data, making it a field in which the unique abilities of machine learning techniques give a clear advantage over traditional approaches.
 
@@ -118,7 +109,7 @@ Let us look at some examples of models that are considered by many to be interpr
 
 Here, we can tell, for example, what the model would predict for the expected severity if we were to increase age by a certain amount, *all else being equal*, because the relationship between the feature and the response is simply the coefficient $\beta_1$ and the link function. Another commonly cited example of an interpretable model is a decision tree. An illustrative example is shown in Figure \@ref(fig:tree-plot1). Here, the prediction is arrived at by following a sequence of if-else decisions.
 
-```{r tree-plot1, echo = FALSE, fig.cap="A simple decision tree for loss cost prediction.", out.width="70%", fig.align='center'}
+```{r tree-plot1, echo = FALSE, fig.cap="A simple decision tree for loss cost prediction.", out.width="100%", fig.align='center'}
 knitr::include_graphics("figures/tree-plot1.png")
 ```
 
@@ -130,7 +121,7 @@ Now, it is worth pointing out that, when declaring that GLM or decision trees ar
 
 Similarly, one can see that in Figure \@ref(fig:tree-plot2), large and deep trees are tough to reason about. In other words, even when working within the framework of an "interpretable" class of models, we may still end up with something that many would consider "black box."
 
-```{r tree-plot2, echo = FALSE, fig.cap="A more complex decision tree for loss cost prediction.", out.width="90%", fig.align='center'}
+```{r tree-plot2, echo = FALSE, fig.cap="A more complex decision tree for loss cost prediction.", out.width="60%", fig.align='center',  fig.env='figure*'}
 knitr::include_graphics("figures/tree-plot2.png")
 ```
 
@@ -192,7 +183,7 @@ More formally, let $y$ denote the vector of responses, $X$ denote the matrix of 
 
 In Figure \@ref(fig:fi), we show a plot of variable importances. We see that FOO and BAR are the most important variables in terms of contributing accuracy to our model. Note that these measures do not provide information regarding the directional sensitivity of the predictors on the response. In our particular example, we see that the "make" variable contributes most to the accuracy of the model with "sex" contributing the least. This provides a way for the audience to quickly glance at the most relevant variables, and ask further question as necessary. For example, if a variable that can potentially be a proxy for a discriminatory variable appears as very important, more investigation would be warranted.
 
-```{r fi, out.width='60%', fig.align = "center", fig.cap="Permutation feature importances for ML model.", echo = FALSE}
+```{r fi, out.width='100%', fig.align = "center", fig.cap="Permutation feature importances for ML model.", echo = FALSE}
 knitr::include_graphics("figures/fi-plot.png")
 ```
 
@@ -201,6 +192,14 @@ knitr::include_graphics("figures/fi-plot.png")
 > "How does the predicted loss cost change, on average, as we change an input?"
 
 For this question, we again consider first how it would be answered in the GLM setting. When the input predictor in question is continuous, we can answer the question by looking at the estimated coefficient, which provides the change in the response per unit change in the predictor (on the scale of the linear predictor). For non-parametric models and neural networks, where no coefficients are available, we can appeal to partial dependence plots (PDP), first proposed by @friedmanGreedyFunction2001 for gradient boosting machines (GBM).
+
+```{r pdp, out.width='70%', fig.align = "center", fig.cap="Partial dependence plot for ML model.", echo = FALSE,  fig.env='figure*', fig.pos='h'}
+knitr::include_graphics("figures/pdp-plot.png")
+```
+
+```{r breakdown, out.width='80%', fig.align = "center", fig.cap="Variable contribution plot for ML model.", echo = FALSE, fig.env = 'figure*', fig.pos = 'h'}
+knitr::include_graphics("figures/breakdown-plot.png")
+```
 
 To describe PDP, we first introduce some notation. Let $x^j$ denote the input variable of interest. Then we define the partial dependence function as
 
@@ -216,15 +215,13 @@ where the expectation is taken over the distribution of the other predictor vari
 
 In Figure \@ref(fig:pdp), we exhibit the PDP for the "vehicle age" variable. We see that the average predicted loss cost decreases with vehicle age until the latter is around 18. Note that the ticks on the axis tell us that the data is quite thin for vehicle age > 18, so the apparent upward trend to the right is driven by just a few data points. With this in mind, we can conclude that as cars get older, we expect the loss cost predictions generated by our model to decrease.
 
-```{r pdp, out.width='60%', fig.align = "center", fig.cap="Partial dependence plot for ML model.", echo = FALSE}
-knitr::include_graphics("figures/pdp-plot.png")
-```
 
 ### Variable Attribution
 
 > "For a particular policyholder, how does each characteristic contribute to the loss cost prediction?"
 
 In the previous two examples, we look at model-level explanations; now we move on to one where we investigate one particular prediction instance. As before, we consider how we would approach the question for linear models. For a GLM with a log link common in ratemaking applications, for example, we simply start with the base rate, then the exponentiated coefficients would have multiplicative effects on the final rate. Similar to the previous examples, for ML models in general we do not have directly interpretable weights. Instead, one way to arrive at variable contributions is calculating the change in the expected model prediction for each predictor, conditioned on other predictors. 
+
 
 Formally, for a fitted model $\widehat{f}$ and a specific instance $x_*$, we would like to decompose the model prediction $\widehat{f}(x_*)$ into
 
@@ -242,10 +239,25 @@ Hence, the contribution of the $j$th variable to the prediction is the increment
 
 In Figure \@ref(fig:breakdown) we exhibit a waterfall plot of variable contributions. The "intercept" value denotes the average model prediction. The predicted loss cost for this particular policyholder is slightly less than average; the characteristics that makes this policyholder more risky are the fact that he is a male between the ages of 18 and 25; counteracting the risky driver characteristics are the vehicle properties: it is a GM vehicle built domestically and is seven years old.
 
-```{r breakdown, out.width='80%', fig.align = "center", fig.cap="Variable contribution plot for ML model.", echo = FALSE}
-knitr::include_graphics("figures/breakdown-plot.png")
-```
-
 # Conclusion {#conclusion}
 
+References {#references .unnumbered}
+==========
+<div id="refs"></div>
 
+\appendix
+
+Appendix {.unnumbered}
+=============
+
+# ML Model Development
+
+In this appendix, we describe the ML model and the data used to train it. Note that, for our paper, the ultimate goal of the modeling procedure is to develop something that can produce predictions. As a result, we do not follow standard practices for supervised learning model development. However, for the sake of completeness and reproducibility, we include the details of the process here.
+
+## Data
+
+We use data from the AUTOSEG ("Automobile Statistics System") of Brazil's Superintendence of Private Insurance (SUSEP). The organization maintains policy-characteristics-level data, including claim counts and amounts, for all insured automobiles in Brazil. The data contains variables from policyholder characteristics to losses by peril.
+
+## Model
+
+Model
