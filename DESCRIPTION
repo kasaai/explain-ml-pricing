@@ -8,4 +8,6 @@ Imports:
   rmarkdown,
   rticles,
   bookdown,
-  knitr
+  knitr,
+  kableExtra,
+  magrittr
