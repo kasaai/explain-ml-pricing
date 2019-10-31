@@ -2,6 +2,7 @@ library(tidyverse)
 library(DALEX)
 library(ggplot2)
 library(scales)
+library(patchwork)
 
 pins::board_register_github(name = "cork", repo = "kasaai/cork")
 testing_data <- pins::pin_get("toy-model-testing-data", board = "cork")
@@ -25,20 +26,31 @@ explainer_nn <- DALEX::explain(
   predict_function = custom_predict,
   label = "neural_net"
 )
-
+# debugonce(ingredients::partial_dependency)
 pdp_vehicle_age <- ingredients::partial_dependency(
   explainer_nn, 
   "vehicle_age",
-  N = 1500
+  N = 10000,
+  variable_splits = list(vehicle_age = seq(0, 35, by =0.1))
 )
+
 
 pdp_plot <- as.data.frame(pdp_vehicle_age) %>% 
   ggplot(aes(x = `_x_`, y = `_yhat_`)) + 
   geom_line() +
   xlab("Vehicle Age") +
   ylab("Average Predicted Loss Cost") +
-  theme_bw() +
-  geom_rug(sides = "b")
+  theme_bw()
+
+pdp_plot
+
+vehicle_age_histogram <- testing_data %>% 
+  ggplot(aes(x = vehicle_age)) + 
+  geom_histogram() +
+  theme_bw()
+
+pdp_plot / vehicle_age_histogram +
+  plot_layout(heights = c(2, 1))
 
 ggsave("manuscript/figures/pdp-plot.png", plot = pdp_plot)
 
