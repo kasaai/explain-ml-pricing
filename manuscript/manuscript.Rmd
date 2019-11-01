@@ -469,8 +469,8 @@ we now introduce a selection of appropriate techniques to answer them.
 
 For linear models and their generalizations, and some ML models, measures of
 variable importance can be obtained from the fitted model structure. In the
-case of GLMs, one might observe the magnitudes of the $t$-statistics, step-wise
-reduction in information criteria, or out-of-sample performance, whereas
+case of GLMs, one might observe the magnitudes of the estimated coefficients or 
+$t$-statistics, whereas
 for random forests, one might use out-of-bag errors [@breimanRandomForests2001].
 For more complex models, such as the neural network in our case study, we need
 to devise another approach.
