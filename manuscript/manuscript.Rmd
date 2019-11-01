@@ -85,8 +85,9 @@ Arguably, GLMs predate minimum bias procedures by a significant margin. The term
 was coined by @nelder_wedderburn_1972, but generalizations of least squares 
 linear regression date back at least to the 1930s. Like minimum bias methods, 
 GLMs did not become mainstream in actuarial science for some time. For example, 
-the syllabus of basic education does not seem to include any mention of GLMs 
-prior to @brown_1988 in the 1990 syllabus for basic education. From there, GLMs 
+the syllabus of basic education of the Casualty Actuarial Society (CAS) does not 
+seem to include any mention of GLMs 
+prior to @brown_1988 in the 1990 syllabus. From there, GLMs 
 seem to have received only passing mention until 2006 with the introduction of 
 @anderson_2005 to the syllabus.
 
@@ -102,7 +103,7 @@ the need for developing analyses from scratch each time an analysis is performed
 Due to the breadth of machine learning as a field, it is difficult to identify 
 the first time it entered the CAS syllabus; however, cluster analysis (in the 
 form of k-means) seems to have been first included in 2011 with @robertson_2009.
-More recently, the MAS-I and MAS-II exams introduced in 2018 have included 
+More recently, the CAS MAS-I and MAS-II exams introduced in 2018 have included 
 machine learning explicitly.
 
 Within the area of ratemaking, machine learning is still in its infancy. A 
@@ -131,9 +132,9 @@ involves some variation of the following steps:
 
 1. Obtain relevant policy-level data
 2. Prepare data for analysis
-3. Perform analysis on the data, employing desired method or methods to estimate
-needed rate relativites
-4. Select final rate relativities based on rate indications
+3. Perform analysis on the data, employing desired method(s) to estimate
+needed rates
+4. Select final rates based on rate indications
 5. Present rates to the reglator, including explanation of the steps followed to 
 derive the rates
 6. Answer questions from regulators regarding the method employed
@@ -142,7 +143,7 @@ The focus of this paper is on steps 5 and 6. In particular, rate regulators are
 concerned with whether rates are inadequate, excessive, or unfairly 
 discriminatory. In many states, rate filings that exceed certain thresholds for
 magnitude of rate changes or filings that make use of new or sophisticated 
-predictive models may be subject to intense regulatory scrutiny. In these cases,
+predictive models may be subject to particular regulatory scrutiny. In these cases,
 it is necessary to be able to explain the results of the modeling process in a 
 way that is understandable without sacrificing statistical rigor.
 
@@ -166,25 +167,25 @@ has at times been an assumption that all techniques and assumptions that have
 ever been a part of the syllabus of basic education needn't be explained from 
 first principles in general actuarial communications, and that an actuary 
 practicing in the same field should be able to make an objective appraisal of 
-the results from the methods found in the syllabus. [This can be supported by 
-reference to the edits to ASOP 38 over time - originally it was designed to be 
-about all models, but they revised it to be about only models that incorporate 
-specialized knowledge outside of the actuary's area of expertise... do we need 
-this citation, though?] This is notable because, beginning with the introduction
-of the MAS-I and MAS-II examination in July of 2018, several machine learning 
+the results from the methods found in the syllabus.
+This is notable because, beginning with the introduction
+of the CAS MAS-I and MAS-II examination in July of 2018, several machine learning 
 models were formally included in the syllabus of basic education. These exams 
 cover a wide range of topics, such as splines, clustering algorithms, decision 
 trees, boosting, and principle components analysis [@cas_syllabus_2018].
 
 Nevertheless, machine learning poses something of a special challenge for ASOP 
-41 for several reasons. Machine learning models can be very ad hoc compared to 
-traditional statistical models. Because many machine learning models are 
-deterministic, they may not admit of standard metrics for model comparison 
+41 for several reasons:
+
+1. Machine learning models can be very ad hoc compared to 
+traditional statistical models.
+2. Because many machine learning models do not assume an underlying probability
+distribution or stochastic process, they may not admit of standard metrics for model comparison 
 (e.g., it's not straightforward to calculate an AIC over a neural network). 
-In addition, machine learning methods are often combined into ensembles that 
+3. Machine learning methods are often combined into ensembles that 
 may not be easily separated and that may, as a collection, cease to resemble 
-a single standard version of a model. Complicating matters still further, 
-machine learning models can be "black boxes" insofar as the final form of 
+a single standard version of a model.
+4. Machine learning models can be "black boxes" insofar as the final form of 
 response curve cannot be easily predicted and may depend heavily on the 
 available data (which may not, in turn, be available to the reviewer).
 
@@ -200,12 +201,12 @@ understanding as the model form and the data on which the model is fitted.
 Because the final model result is inseparable from these three components 
 (training method, model form, and data), it is not generally adequate to just
 know the method employed to make an objective appraisal of the reasonableness 
-of the model. More information is necessary.
+of the result. More information is necessary.
 
-Of course, these comments only apply to the actuarial profession. Outside of 
+Of course, these comments only apply within the actuarial profession. Outside of 
 the actuarial profession, communication of results may be more challenging. A 
 2017 survey conducted by the Casualty Actuarial and Statistical Task Force of 
-the National Association of Insurance Commissioners found that the plurality of
+the National Association of Insurance Commissioners (NAIC) found that the plurality of
 responding regulators identified "Filing complexity and/or a lack of resources 
 or expertise" as a key challenge that impedes their ability to review GLMs or 
 other predictive models [@naic_summer_2017]. Given that machine learning 
@@ -225,8 +226,8 @@ learning models. For example, as previously noted, p-values are not a concept
 that translates well to deterministic machine learning algorithms. However,
 among the guidance applicable to machine learning algorithms are the following:
 
-* Determine the extent the model causes premium disruption for individual 
-policyholders, and how the insurer will
+* Determine the extent to which the model causes premium disruption for individual 
+policyholders and how the insurer will
 explain the disruption to individual consumers that inquire about it.
 * Determine that individual input characteristics to a predictive model are 
 related to the expected loss or expense
@@ -256,11 +257,11 @@ method’s results [@kimExamplesAre2016].
 
 We motivate our discussion by considering several aspects of interpretability. 
 As we proceed through the points below, we aim to arrive at a more scoped and 
-relevant definition of what it means to attain interpretability in a pricing
-model. In the remainder of this section, we clarify a couple concepts regarding 
-interpretable *classes* of models and and the computational transparency of ML
-models, outline findings on the social aspects of ML explanations most relevant
-to our use case, then discuss a potential framework for implementing ML 
+relevant definition of what it means for a pricing
+model to be interpretable. In the remainder of this section, we clarify a couple concepts regarding 
+interpretable *classes* of models and the computational transparency of ML
+models, outline frameworks for understanding the communication goals of interpretability,
+then discuss a potential framework for implementing ML 
 interpretability in practice.
 
 ## Not All Linear Models are Interpretable {#linear-models}
@@ -269,7 +270,7 @@ In the actuarial science literature, the GLM is probably the most oft-cited
 example of an easily interpretable model. Given a set of inputs, we can easily
 reason about what the output of the model is. As an illustrative example, 
 consider a claim severity model with driver age, sex, and vehicle age as 
-features; assuming a log link function and letting $Y$ denotes the response, we
+predictors; assuming a log link function and letting $Y$ denote the response, we
 have
 
 \begin{align}
@@ -279,7 +280,7 @@ have
 
 Here, we can tell, for example, what the model would predict for the expected 
 severity if we were to increase age by a certain amount, *all else being equal*,
-because the relationship between the feature and the response is simply 
+because the relationship between the predictor and the response is simply 
 multiplication by the coefficient $\beta_1$ and applying the inverse link
 function.
 
@@ -293,8 +294,8 @@ knitr::include_graphics("figures/tree-plot1.png")
 
 Now, it is worth pointing out that, when declaring that GLMs or decision trees 
 are interpretable models, we are implicitly assuming that we are considering 
-only a handful  of features. In fact, the ease at which we can reason about a
-model declines as the number of features, transformations of them, and
+only a handful  of predictors. In fact, the ease with which we can reason about a
+model declines as the number of predictors, transformations of them, and
 interactions increase, as in the following (somewhat pathological) example:
 
 \begin{align}\label{eq:badglm}
@@ -330,10 +331,12 @@ mathematical rules, and are deterministic in most cases.
 
 ## Explanations are Contextual
 
-Proposed by @hiltonConversationalProcesses1990 and interpreted by
-@millerExplanationArtificial2017 in the context of ML, model explanations
-are conversations or social interactions. One consequence of this identification
-is that explanations need to be *relevant* to the *audience*. In developing,
+@hiltonConversationalProcesses1990 proposed a framework, later interpreted by
+@millerExplanationArtificial2017 in the context of ML, for understanding model explanations
+as *conversations* or *social interactions.* One consequence of this identification
+is that explanations need to be *relevant* to the *audience*. This framework is
+consistent with ASOP 41, which formulates a similar requirement in terms of an
+*intended user* of the actuarial communication. In developing,
 filing, and operationalizing a pricing model, one needs to accommodate a variety
 of stakeholders, each of whom has a different set of questions, assumptions,
 and technical capacity. First, there are internal stakeholders at the company,
@@ -342,17 +345,16 @@ this audience may be technical, they are likely less familiar with predictive
 modeling techniques than the actuaries and data scientists who build the models.
 Next, we have the regulators, who may have limited resources to review the
 models, and will focus on a specific list of questions motivated by statute
-and public policy. Finally, we have the public, who has an interest (perhaps
-more so than the other parties) because their lives are directly affected by
-the premiums charged.
+and public policy. Finally, we have potential policyholders, who have an interest (perhaps
+more so than the other parties) as they are responsible for paying the premiums.
 
-It is interesting to note that, the modelers, who are most familiar with the
+It is interesting to note that the modelers, who are most familiar with the
 models, tend to be same people designing and communicating the explanations.
 This poses a challenge that @millerExplainableAI2017 calls "inmates running
 the asylum", where the modelers design explanations for *themselves* rather
 than the intended audience. For example, they may be interested in technical
-questions such as extrapolation behavior and shape the explanations accordingly,
-which may be lost on the prospective policyholder.
+questions, such as extrapolation behavior, and shape the explanations accordingly,
+which may be irrelevant to a prospective policyholder.
 
 Another point outlined in Miller's survey [@millerExplanationArtificial2017] is
 that explanations are *contrastive*. In other words, people are often interested
@@ -406,7 +408,8 @@ fitted deep neural network model for predicting loss costs. As the modeling
 details are of secondary importance, they are available in Appendix
 \ref{model-dev}. The questions that we ask of the model are as follows:
 
-1. What are the most important predictors in the model?
+1. What are the most important predictors in the model? Put another way, to
+what extent do the predictors improve the accuracy of the model?
 2. How does the predicted loss cost change, on average, as we change an input?
 3. For a particular policyholder, how does each characteristic contribute to
 the loss cost prediction?
@@ -467,8 +470,9 @@ we now introduce a selection of appropriate techniques to answer them.
 
 For linear models and their generalizations, and some ML models, measures of
 variable importance can be obtained from the fitted model structure. In the
-case of GLMs, one can observe the magnitudes of the $t$-statistics, whereas
-for random forests, one can use out-of-bag errors [@breimanRandomForests2001].
+case of GLMs, one might observe the magnitudes of the estimated coefficients or 
+$t$-statistics, whereas
+for random forests, one might use out-of-bag errors [@breimanRandomForests2001].
 For more complex models, such as the neural network in our case study, we need
 to devise another approach.
 
@@ -487,7 +491,7 @@ predictor variables, $\widehat{f}$ denote the fitted model, and
 $L = \mathcal{L}(\widehat{f}(X), y)$, where $\widehat{f}$ applies to $X$
 rowwise, denote the value of the loss function, which is mean squared error
 in the case of regression. Now, if $\widetilde{X}^{j}$ denotes the predictor
-matrix where the $j$th variable has been permutated, then we can compute the
+matrix where the $j$th variable has been permuted, then we can compute the
 loss with the permuted dataset as
 $L^{-j} = \mathcal{L}(\widehat{f}(\widetilde{X}^{j}), y)$. With this, we define
 the  variable importance $VI^{j}$ as $L^{-j} - L$.
@@ -496,9 +500,7 @@ In Figure \@ref(fig:fi), we show a plot of variable importances. In our
 particular example, we see that the "make" variable contributes most to the
 accuracy of the model with "sex" contributing the least. This provides a way
 for the audience to quickly glance at the most relevant variables, and ask
-further question as necessary. For example, if a variable that can potentially
-be a proxy for a discriminatory variable appears as very important, more
-investigation would be warranted.
+further question as necessary.
 
 Note that these measures do not provide information regarding the directional
 sensitivity of the predictors on the response. Also, when there are correlated
@@ -553,9 +555,10 @@ In Figure \@ref(fig:pdp), we exhibit the PDP for the "vehicle age" variable.
 We see that the average predicted loss cost decreases with vehicle age until
 the latter is around 18. Note that the rug on the $x$-axis tell us that the
 data is quite thin for vehicle age greater than 18, so the apparent upward
-trend to the right is driven by just a few data points. With this in mind,
-we can conclude that as cars get older, we expect the loss cost predictions
-generated by our model to decrease.
+trend to the right is driven by just a few data points.
+
+This information allows the modeler and stakeholders to consider whether it
+is reasonable for the anticipated loss cost to follow this shape.
 
 The question posed here is particularly important for regulators, who would
 like to know whether each variable affects the prediction in the direction that
@@ -658,7 +661,33 @@ domain of interest.
 
 # Conclusion {#conclusion}
 
-(TODO)
+Actuarial standards of practice, most notably ASOP 41, places responsibility on
+the actuary to clearly communicate actuarial work products, including insurance
+pricing models. These responsibilities create special challenges for
+communicating machine learning models, which are often seen "black boxes" due
+in part to their complexity, nonlinearity, flexible construction, and ad hoc
+nature.
+
+In this paper, we discuss particular questions of model validation that are
+of key importance in communicating a model that may present particular
+difficulty for machine learning models compared to GLMs or traditional pricing
+models. Specifically,
+
+* How does the model impact individual insurance consumers?
+* How are the predictor variables related to expected losses?
+* Are the variables unfairly discriminatory?
+
+We contextualize these questions in terms of different frameworks for defining
+interpretability. We conceptualize interpretability in terms of the ability of
+a model (or modeler) to answer a set of idealized questions that would be
+refined. We then offer potential (families of) model-agnostic techniques for
+providing answers to these questions.
+
+Much work remains to be done in terms of defining the role of machine learning
+algorithms in actuarial practice. Lack of interpretability has been a key
+barrier preventing wider adoption and exploration of these techniques. The
+methods proposed in this paper could therefore represent important strides in
+unlocking the potential of machine learning within the insurance industry.
 
 Acknowledgments {.unnumbered}
 ==========
