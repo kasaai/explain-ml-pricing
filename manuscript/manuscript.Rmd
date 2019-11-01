@@ -372,10 +372,18 @@ with acceptance criteria and examples of successful explanations. In other
 words, interpretability for our purposes is defined as the ability of a model's
 explanations to answer the posed questions.
 
+It should be noted that no ideal set of questions exists that would encompass
+all potential models. Rather, the actuary must consider what aspects of the
+model would raise questions from the perspective of the model's intended users.
+We propose that relevant stakeholders, by providing example questions and
+answers, would inherently provide guidance by which actuaries can reasonably
+anticipate the kinds of specific questions most important to those stakeholders
+and address them proactively.
+
 These questions should relate to existing guidelines, such as those described in
 @naic_white_paper and outlined in Section \ref{need}, standards of practice, and
 regulation, and in fact should not be specific only to ML models. By
-standardizing on a set of questions, we reduce the burden of both companies and
+conceptualizing a set of questions, we reduce the burden of both companies and
 regulators; this is especially important for the latter, who are already
 resource constrained facing increasing variety of models being filed. This
 format should also be familiar to actuaries who are accustomed to adhering to
