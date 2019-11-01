@@ -550,10 +550,6 @@ Empirically, we estimate $h$ by
 
 where $N$ is the number of records in the dataset.
 
-Note that this proposed plot can be calculated over the dataset or over a
-hypothetical dataset in which the value of $x_i^{j}$ is set equal to $z$ for
-each record.
-
 In Figure \@ref(fig:pdp), we exhibit the PDP for the "vehicle age" variable.
 We see that the average predicted loss cost decreases with vehicle age until
 the latter is around 18. Note that the rug on the $x$-axis tell us that the
