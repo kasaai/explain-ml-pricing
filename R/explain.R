@@ -2,6 +2,7 @@ library(tidyverse)
 library(DALEX)
 library(ggplot2)
 library(scales)
+library(patchwork)
 
 pins::board_register_github(name = "cork", repo = "kasaai/cork")
 testing_data <- pins::pin_get("toy-model-testing-data", board = "cork")
@@ -29,16 +30,28 @@ explainer_nn <- DALEX::explain(
 pdp_vehicle_age <- ingredients::partial_dependency(
   explainer_nn, 
   "vehicle_age",
-  N = 1500
+  N = 10000,
+  variable_splits = list(vehicle_age = seq(0, 35, by = 0.1))
 )
 
 pdp_plot <- as.data.frame(pdp_vehicle_age) %>% 
   ggplot(aes(x = `_x_`, y = `_yhat_`)) + 
   geom_line() +
-  xlab("Vehicle Age") +
   ylab("Average Predicted Loss Cost") +
+  theme_bw()+
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x=element_blank(),
+        axis.title.x=element_blank())
+
+vehicle_age_histogram <- testing_data %>% 
+  ggplot(aes(x = vehicle_age)) + 
+  geom_histogram(alpha = 0.8) +
   theme_bw() +
-  geom_rug(sides = "b")
+  ylab("Count") +
+  xlab("Vehicle Age")
+
+pdp_plot <- pdp_plot / vehicle_age_histogram +
+  plot_layout(heights = c(2, 1))
 
 ggsave("manuscript/figures/pdp-plot.png", plot = pdp_plot)
 
@@ -64,7 +77,7 @@ fi_plot <- fi %>%
     df %>% 
       filter(!variable %in% c("_full_model_", "_baseline_")) %>% 
       ggplot(aes(x = reorder(variable, dropout_loss), y = dropout_loss)) +
-      geom_bar(stat = "identity") +
+      geom_bar(stat = "identity", alpha = 0.8) +
       geom_hline(yintercept = full_model_loss, col = "red", linetype = "dashed")+
       scale_y_continuous(limits = c(full_model_loss, NA),
                          oob = rescale_none
