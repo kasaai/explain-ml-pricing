@@ -671,7 +671,7 @@ communicating machine learning models, which are often seen "black boxes" due
 in part to their complexity, nonlinearity, flexible construction, and ad hoc
 nature.
 
-In this paper, we discussed particular questions of model validation that are
+In this paper, we discuss particular questions of model validation that are
 of key importance in communicating a model that may present particular
 difficulty for machine learning models compared to GLMs or traditional pricing
 models. Specifically,
@@ -680,17 +680,17 @@ models. Specifically,
 * How are the predictor variables related to expected losses?
 * Are the variables unfairly discriminatory?
 
-We contextualized these questions in terms of different frameworks for defining
+We contextualize these questions in terms of different frameworks for defining
 interpretability. We conceptualize interpretability in terms of the ability of
 a model (or modeler) to answer a set of idealized questions that would be
-refined. We then offered potential (families of) model-agnostic techniques for
+refined. We then offer potential (families of) model-agnostic techniques for
 providing answers to these questions.
 
 Much work remains to be done in terms of defining the role of machine learning
 algorithms in actuarial practice. Lack of interpretability has been a key
 barrier preventing wider adoption and exploration of these techniques. The
 methods proposed in this paper could therefore represent important strides in
-nlocking the potential of machine learning within the insurance industry.
+unlocking the potential of machine learning within the insurance industry.
 
 Acknowledgments {.unnumbered}
 ==========
