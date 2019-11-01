@@ -692,6 +692,9 @@ unlocking the potential of machine learning within the insurance industry.
 Acknowledgments {.unnumbered}
 ==========
 
+We thank Navdeep Gill for his presentation on interpretable ML at SDSS and
+helpful follow-up discussions, and Daniel Falbel for his assistance with R and 
+TensorFlow.
 This work is supported by the Casualty Actuarial Society.
 
 References {#references .unnumbered}
