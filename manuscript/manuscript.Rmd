@@ -85,7 +85,8 @@ Arguably, GLMs predate minimum bias procedures by a significant margin. The term
 was coined by @nelder_wedderburn_1972, but generalizations of least squares 
 linear regression date back at least to the 1930s. Like minimum bias methods, 
 GLMs did not become mainstream in actuarial science for some time. For example, 
-the syllabus of basic education of the Casualty Actuarial Society does not seem to include any mention of GLMs 
+the syllabus of basic education of the Casualty Actuarial Society (CAS) does not 
+seem to include any mention of GLMs 
 prior to @brown_1988 in the 1990 syllabus. From there, GLMs 
 seem to have received only passing mention until 2006 with the introduction of 
 @anderson_2005 to the syllabus.
@@ -102,7 +103,7 @@ the need for developing analyses from scratch each time an analysis is performed
 Due to the breadth of machine learning as a field, it is difficult to identify 
 the first time it entered the CAS syllabus; however, cluster analysis (in the 
 form of k-means) seems to have been first included in 2011 with @robertson_2009.
-More recently, the MAS-I and MAS-II exams introduced in 2018 have included 
+More recently, the CAS MAS-I and MAS-II exams introduced in 2018 have included 
 machine learning explicitly.
 
 Within the area of ratemaking, machine learning is still in its infancy. A 
@@ -168,7 +169,7 @@ first principles in general actuarial communications, and that an actuary
 practicing in the same field should be able to make an objective appraisal of 
 the results from the methods found in the syllabus.
 This is notable because, beginning with the introduction
-of the MAS-I and MAS-II examination in July of 2018, several machine learning 
+of the CAS MAS-I and MAS-II examination in July of 2018, several machine learning 
 models were formally included in the syllabus of basic education. These exams 
 cover a wide range of topics, such as splines, clustering algorithms, decision 
 trees, boosting, and principle components analysis [@cas_syllabus_2018].
