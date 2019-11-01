@@ -206,7 +206,7 @@ of the result. More information is necessary.
 Of course, these comments only apply within the actuarial profession. Outside of 
 the actuarial profession, communication of results may be more challenging. A 
 2017 survey conducted by the Casualty Actuarial and Statistical Task Force of 
-the National Association of Insurance Commissioners found that the plurality of
+the National Association of Insurance Commissioners (NAIC) found that the plurality of
 responding regulators identified "Filing complexity and/or a lack of resources 
 or expertise" as a key challenge that impedes their ability to review GLMs or 
 other predictive models [@naic_summer_2017]. Given that machine learning 
