@@ -553,7 +553,7 @@ where $N$ is the number of records in the dataset.
 
 In Figure \@ref(fig:pdp), we exhibit the PDP for the "vehicle age" variable.
 We see that the average predicted loss cost decreases with vehicle age until
-the latter is around 18. Note that the rug on the $x$-axis tell us that the
+the latter is around 18. Note that the accompanying histogram shows that the
 data is quite thin for vehicle age greater than 18, so the apparent upward
 trend to the right is driven by just a few data points.
 
