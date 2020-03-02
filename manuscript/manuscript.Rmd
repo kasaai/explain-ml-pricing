@@ -547,7 +547,7 @@ Note that these measures do not provide information regarding the directional
 sensitivity of the predictors on the response. Also, when there are correlated
 variables, one should be careful about interpretation, as the result may be
 biased by unrealistic records in the permuted dataset. Another ramification
-of a group correlated variables is that their inclusion may cause each to
+of a group of correlated variables is that their inclusion may cause each to
 appear less important than if only one is included in the model.
 
 ```{r fi, out.width='100%', fig.align = "center", fig.cap="Permutation feature importances for the neural network model.", echo = FALSE}
