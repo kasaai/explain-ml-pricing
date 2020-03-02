@@ -531,8 +531,11 @@ rowwise, denote the value of the loss function, which is mean squared error
 in the case of regression. Now, if $\widetilde{X}^{j}$ denotes the predictor
 matrix where the $j$th variable has been permuted, then we can compute the
 loss with the permuted dataset as
-$L^{-j} = \mathcal{L}(\widehat{f}(\widetilde{X}^{j}), y)$. With this, we define
-the  variable importance $VI^{j}$ as $L^{-j} - L$.
+$L^{-j} = \mathcal{L}(\widehat{f}(\widetilde{X}^{j}), y)$. 
+Here, by *permuting* a variable, we mean that we randomly rearrange the values 
+in the column of data associated with the variable.
+With this, we define
+the variable importance $VI^{j}$ as $L^{-j} - L$.
 
 In Figure \@ref(fig:fi), we show a plot of variable importances. In our
 particular example, we see that the "make" variable contributes most to the
