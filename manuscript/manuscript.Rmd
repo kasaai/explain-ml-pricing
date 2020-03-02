@@ -115,9 +115,9 @@ high-dimensionality and complexity of telematics data, making it a field in
 which the unique abilities of machine learning techniques give a clear 
 advantage over traditional approaches.
 
-Outside of telematics, @yang_2018 uses a gradient tree-boosting approach to 
+Outside of telematics, @yang_2018 use a gradient tree-boosting approach to 
 capture non-linearities that would be a challenge for GLMs. @henckaerts_2018 
-makes use of generalized additive models (GAM) to improve predictions of GLMs.
+make use of generalized additive models (GAM) to improve predictions of GLMs.
 Many researchers, in an apparent effort to demonstrate the range of possibilities
 and advantages of machine learning, have approached the topic by comparing many
 different machine learning algorithms within a single study, such as in
@@ -384,7 +384,7 @@ more so than the other parties) as they are responsible for paying the premiums.
 
 It is interesting to note that the modelers, who are most familiar with the
 models, tend to be same people designing and communicating the explanations.
-This poses a challenge that @millerExplainableAI2017 calls "inmates running
+This poses a challenge that @millerExplainableAI2017 call "inmates running
 the asylum", where the modelers design explanations for *themselves* rather
 than the intended audience. For example, they may be interested in technical
 questions, such as extrapolation behavior, and shape the explanations accordingly,
