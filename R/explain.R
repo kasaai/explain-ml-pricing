@@ -4,6 +4,9 @@ library(ggplot2)
 library(scales)
 library(patchwork)
 
+# Need to use the following branch of {ingredients}
+# remotes::install_github("kevinykuo/ingredients", ref = "weights")
+
 pins::board_register_github(name = "cork", repo = "kasaai/cork")
 testing_data <- pins::pin_get("toy-model-testing-data", board = "cork")
 piggyback::pb_download(file = "model_artifacts/toy-model.tar.gz", repo = "kasaai/cork")
@@ -23,6 +26,7 @@ explainer_nn <- DALEX::explain(
   model = toy_model,
   data = testing_data,
   y = testing_data$loss_per_exposure,
+  weights = testing_data$exposure,
   predict_function = custom_predict,
   label = "neural_net"
 )
@@ -62,7 +66,7 @@ fi <- ingredients::feature_importance(
       sum(((observed - predicted) ^ 2 * weights) /sum(weights))
     )
   },
-  weights = testing_data$exposure,
+  # weights = testing_data$exposure,
   variables = predictors,
   B = 10,
   n_sample = 50000
@@ -71,11 +75,14 @@ fi <- ingredients::feature_importance(
 fi_plot <- fi %>% 
   as.data.frame() %>% 
   (function(df) {
+    df <- df %>% 
+      group_by(variable) %>% 
+      summarize(dropout_loss = mean(dropout_loss))
     full_model_loss <- df %>% 
       filter(variable == "_full_model_") %>% 
       pull(dropout_loss)
     df %>% 
-      filter(!variable %in% c("_full_model_", "_baseline_")) %>% 
+      filter(!variable %in% c("_full_model_", "_baseline_")) %>%
       ggplot(aes(x = reorder(variable, dropout_loss), y = dropout_loss)) +
       geom_bar(stat = "identity", alpha = 0.8) +
       geom_hline(yintercept = full_model_loss, col = "red", linetype = "dashed")+
@@ -92,29 +99,34 @@ fi_plot <- fi %>%
 ggsave("manuscript/figures/fi-plot.png", plot = fi_plot)
 
 sample_row <- testing_data[1,] %>% 
-  select(predictors)
+  select(!!predictors)
 breakdown <- iBreakDown::break_down(explainer_nn, sample_row)
 
 df <- breakdown %>% 
   as.data.frame() %>% 
-  mutate(start = lag(cummulative, default = first(contribution)),
+  mutate(start = lag(cumulative, default = first(contribution)),
          label = formatC(contribution, digits = 2, format = "f")) %>% 
   mutate_at("label", 
             ~ ifelse(!variable %in% c("intercept", "prediction") & .x > 0,
                      paste0("+", .x),
-                     .x))
+                     .x)) %>% 
+  mutate_at(c("variable", "variable_value"),
+            ~ .x %>% 
+              sub("Entre 18 e 25 anos", "18-25", .) %>% 
+              sub("Passeio nacional", "Domestic passener", .) %>% 
+              sub("Masculino", "Male", .))
 
 breakdown_plot <- df %>% 
   ggplot(aes(reorder(variable, position), fill = sign,
              xmin = position - 0.40, 
              xmax = position + 0.40, 
              ymin = start, 
-             ymax = cummulative)) +
+             ymax = cumulative)) +
   geom_rect(alpha = 0.4) +
   geom_errorbarh(data = df %>% filter(variable_value != ""),
                  mapping = aes(xmax = position - 1.40,
                                xmin = position + 0.40,
-                               y = cummulative), height = 0,
+                               y = cumulative), height = 0,
                  linetype = "dotted",
                  color = "blue") +
   geom_rect(
@@ -122,7 +134,7 @@ breakdown_plot <- df %>%
     mapping = aes(xmin = position - 0.4,
                   xmax = position + 0.4,
                   ymin = start,
-                  ymax = cummulative),
+                  ymax = cumulative),
     color = "black") +
   scale_fill_manual(values = c("blue", "orange", NA)) +
   coord_flip() +
@@ -130,7 +142,7 @@ breakdown_plot <- df %>%
   theme(legend.position = "none") + 
   geom_text(
     aes(label = label, 
-        y = pmax(df$cummulative,  df$cummulative - df$contribution)), 
+        y = pmax(df$cumulative,  df$cumulative - df$contribution)), 
     nudge_y = 10,
     hjust = "inward", 
     color = "black"
