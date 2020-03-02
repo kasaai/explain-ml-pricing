@@ -630,7 +630,9 @@ in the expected model prediction for each predictor, conditioned on other
 predictors. 
 
 
-Formally, for a fitted model $\widehat{f}$ and a specific instance $x_*$, we
+Formally, for a fitted model $\widehat{f}$, a given ordering of the variables
+$X^1,\dots,X^p$, where $p$ is the number of predictor variables,
+and a specific instance $x_*$, we
 would like to decompose the model prediction $\widehat{f}(x_*)$ into
 
 \begin{equation}\label{eq:contrib-decompose}
