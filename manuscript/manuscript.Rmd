@@ -89,7 +89,8 @@ the syllabus of basic education of the Casualty Actuarial Society (CAS) does not
 seem to include any mention of GLMs 
 prior to @brown_1988 in the 1990 syllabus. From there, GLMs 
 seem to have received only passing mention until 2006 with the introduction of 
-@anderson_2005 to the syllabus.
+@anderson_2005 to the syllabus. Beginning in 2016, the CAS introduced @goldburd_2016
+to the syllabus, which offers a comprehensive guide to GLMs.
 
 ## Machine Learning in Ratemaking
 
@@ -139,9 +140,8 @@ needed rates
 derive the rates
 6. Answer questions from regulators regarding the method employed
 
-The focus of this paper is on steps 5 and 6. In particular, rate regulators are 
-concerned with whether rates are inadequate, excessive, or unfairly 
-discriminatory. In many states, rate filings that exceed certain thresholds for
+The focus of this paper is on steps 5 and 6.
+In many states, rate filings that exceed certain thresholds for
 magnitude of rate changes or filings that make use of new or sophisticated 
 predictive models may be subject to particular regulatory scrutiny. In these cases,
 it is necessary to be able to explain the results of the modeling process in a 
@@ -149,10 +149,26 @@ way that is understandable without sacrificing statistical rigor.
 
 It should be noted that communicating results is not simply a method of passing 
 regulatory muster. Generating interpretable modeling output is an important - 
-even essential - facet of model checking. Therefore, the techniques discussed 
+even essential - facet of model checking. Actuaries are bound by relevant standards
+to be able to exercise appropriate judgment in selecting risk characteristics as
+part of a risk classification system per Actuarial Standard of Practice 12
+("Risk Classification"). Therefore, the techniques discussed 
 in this paper may be viewed from the lens of providing useful information to 
 regulators, but they should also be considered as part of a thorough vetting of 
-any rating model.
+any rating model. 
+
+Although the focus of this paper is on communication to regulators, it should be
+said that selecting final rates based on indications (step 4 in the list above) may
+pose a unique challenge for black-box models. This, too, provides strong motivation
+for techniques that could add to the modeler's - or any stakeholder's -
+understanding of the model, such as the relative importance of variables or the
+shapes of response curves. Such techniques could be usefully employed in making
+decisions about how best to select rates.
+
+Similarly, although the focus of this paper is on communication in a pricing
+context, the techniques explored in this paper (and many of the concerns discussed)
+may also be relevant to other contexts, such as claim-level reserving / analytics
+or other applications of machine learning to the insurance industry.
 
 # The Need to See Inside the Black Box {#need}
 
@@ -203,7 +219,17 @@ Because the final model result is inseparable from these three components
 know the method employed to make an objective appraisal of the reasonableness 
 of the result. More information is necessary.
 
-Of course, these comments only apply within the actuarial profession. Outside of 
+These issues also pose particular challenges with respect to other standards.
+For instance, as discussed previously, ASOP 12 requires
+actuaries to be able to exercise appropriate judgment about risk classification
+systems. The recent ASOP 56 ("Models") speaks to more general concerns in all
+practice areas that might make use of models. ASOP 56 requires the actuary to
+"make reasonable efforts to confirm that the model structure, data, assumptions,
+governance and controls, and model testing and output validation are consistent
+with the intended purpose." [@asop_56] All of these efforts may be hampered if
+it is not possible to peer into the black box of the model.
+
+It should also be noted that these comments only apply within the actuarial profession. Outside of 
 the actuarial profession, communication of results may be more challenging. A 
 2017 survey conducted by the Casualty Actuarial and Statistical Task Force of 
 the National Association of Insurance Commissioners (NAIC) found that the plurality of
@@ -236,7 +262,15 @@ demonstrable actual relationship to expected loss or expense.
 * Determine that individual outputs from a predictive model and their associated
 selected relativities are not unfairly discriminatory.
 
-These items are by no means exhaustive, but they pertain to the concept of model
+The last of these items is an entire topic unto itself. The methods and
+concepts introduced in this paper are useful for exploring the question of whether
+rates are appropriately related to risk of loss as defined by the variables used
+in the model, but there are many other aspects of discrimination-free that are
+outside the scope of this paper. The methods in this paper may help in understanding
+the model, which is a necessary precursor to addressing the question of unfair
+discrimination.
+
+The items in this list are by no means exhaustive, but they pertain to the concept of model
 interpretability for ratemaking that we develop next.
 
 # Interpretability in the Ratemaking Context {#interpretability}
@@ -452,8 +486,12 @@ Along the other dimension, we categorize model interpretations as global, or
 model-level, and local, or instance-level. The former class provides insights
 with respect to the model as a whole. Some examples of these eplanations include
 variable importances and sensitivities, on average, of the predicted response
-with respect to individual predictors. In our case study, questions 1 and 2 are
-associated with this category. On the other hand, question 3 pertains to an
+with respect to individual predictors. Note that these methods may be compared to
+the methods described in [@goldburd_2016], Chapter 7, which focus on global
+interpretation of GLMs.
+
+In our case study, questions 1 and 2 are
+associated with global interpretations. On the other hand, question 3 pertains to an
 individual prediction, which would fall in the local, or instance-level,
 category. In addition to individual variable attribution, we can also inquire
 about what would happen to the current predicted response if we were to perturb
@@ -636,6 +674,9 @@ including interactions terms, and averaging over possible orderings. The last
 of these ideas is implemented by @NIPS2017_7062 using Shapley values from 
 cooperative game theory, and is referred to as Shapley additive explanations 
 (SHAP). These approaches are discussed further in @biecekPMVEE and its references.
+Shapley values were also used in @mango_1998, which has appeared on the CAS syllabus
+starting in 2004, in the context of determining how to allocate catastrophe
+risk loads between multiple accounts.
 
 ## Other Techniques
 
@@ -675,7 +716,6 @@ models. Specifically,
 
 * How does the model impact individual insurance consumers?
 * How are the predictor variables related to expected losses?
-* Are the variables unfairly discriminatory?
 
 We contextualize these questions in terms of different frameworks for defining
 interpretability. We conceptualize interpretability in terms of the ability of
