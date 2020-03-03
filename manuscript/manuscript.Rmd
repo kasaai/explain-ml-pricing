@@ -115,9 +115,9 @@ high-dimensionality and complexity of telematics data, making it a field in
 which the unique abilities of machine learning techniques give a clear 
 advantage over traditional approaches.
 
-Outside of telematics, @yang_2018 uses a gradient tree-boosting approach to 
+Outside of telematics, @yang_2018 use a gradient tree-boosting approach to 
 capture non-linearities that would be a challenge for GLMs. @henckaerts_2018 
-makes use of generalized additive models (GAM) to improve predictions of GLMs.
+make use of generalized additive models (GAM) to improve predictions of GLMs.
 Many researchers, in an apparent effort to demonstrate the range of possibilities
 and advantages of machine learning, have approached the topic by comparing many
 different machine learning algorithms within a single study, such as in
@@ -167,7 +167,7 @@ decisions about how best to select rates.
 
 Similarly, although the focus of this paper is on communication in a pricing
 context, the techniques explored in this paper (and many of the concerns discussed)
-may also be relevant to other contexts, such as claim-level reserving / analytics
+may also be relevant to other contexts, such as claim-level reserving or analytics,
 or other applications of machine learning to the insurance industry.
 
 # The Need to See Inside the Black Box {#need}
@@ -217,7 +217,7 @@ understanding as the model form and the data on which the model is fitted.
 Because the final model result is inseparable from these three components 
 (training method, model form, and data), it is not generally adequate to just
 know the method employed to make an objective appraisal of the reasonableness 
-of the result. More information is necessary.
+of the result.
 
 These issues also pose particular challenges with respect to other standards.
 For instance, as discussed previously, ASOP 12 requires
@@ -384,7 +384,7 @@ more so than the other parties) as they are responsible for paying the premiums.
 
 It is interesting to note that the modelers, who are most familiar with the
 models, tend to be same people designing and communicating the explanations.
-This poses a challenge that @millerExplainableAI2017 calls "inmates running
+This poses a challenge that @millerExplainableAI2017 call "inmates running
 the asylum", where the modelers design explanations for *themselves* rather
 than the intended audience. For example, they may be interested in technical
 questions, such as extrapolation behavior, and shape the explanations accordingly,
@@ -531,8 +531,11 @@ rowwise, denote the value of the loss function, which is mean squared error
 in the case of regression. Now, if $\widetilde{X}^{j}$ denotes the predictor
 matrix where the $j$th variable has been permuted, then we can compute the
 loss with the permuted dataset as
-$L^{-j} = \mathcal{L}(\widehat{f}(\widetilde{X}^{j}), y)$. With this, we define
-the  variable importance $VI^{j}$ as $L^{-j} - L$.
+$L^{-j} = \mathcal{L}(\widehat{f}(\widetilde{X}^{j}), y)$. 
+Here, by *permuting* a variable, we mean that we randomly rearrange the values 
+in the column of data associated with the variable.
+With this, we define
+the variable importance $VI^{j}$ as $L^{-j} - L$.
 
 In Figure \@ref(fig:fi), we show a plot of variable importances. In our
 particular example, we see that the "make" variable contributes most to the
@@ -544,7 +547,7 @@ Note that these measures do not provide information regarding the directional
 sensitivity of the predictors on the response. Also, when there are correlated
 variables, one should be careful about interpretation, as the result may be
 biased by unrealistic records in the permuted dataset. Another ramification
-of a group correlated variables is that their inclusion may cause each to
+of a group of correlated variables is that their inclusion may cause each to
 appear less important than if only one is included in the model.
 
 ```{r fi, out.width='100%', fig.align = "center", fig.cap="Permutation feature importances for the neural network model.", echo = FALSE}
@@ -608,7 +611,10 @@ investigate.
 As with permutation feature importance, one should be careful when interpreting
 PDP when there are strongly correlated variables. Since we average over the
 marginal distribution of the rest of the variables, we may take into account
-unrealistic data (e.g. high vehicle age for a model that is brand new).
+unrealistic data (e.g. high vehicle age for a model that is brand new). To
+address this drawback, alternative visualization techniques have been proposed,
+such as accumulated local effect (ALE) plots, which take expectations over
+conditional, rather than marginal, distributions [@apley2016visualizing].
 
 ### Variable Attribution
 
@@ -627,7 +633,9 @@ in the expected model prediction for each predictor, conditioned on other
 predictors. 
 
 
-Formally, for a fitted model $\widehat{f}$ and a specific instance $x_*$, we
+Formally, for a fitted model $\widehat{f}$, a given ordering of the variables
+$X^1,\dots,X^p$, where $p$ is the number of predictor variables,
+and a specific instance $x_*$, we
 would like to decompose the model prediction $\widehat{f}(x_*)$ into
 
 \begin{equation}\label{eq:contrib-decompose}
@@ -732,9 +740,9 @@ unlocking the potential of machine learning within the insurance industry.
 Acknowledgments {.unnumbered}
 ==========
 
-We thank Navdeep Gill for his presentation on interpretable ML at SDSS and
-helpful follow-up discussions, and Daniel Falbel for his assistance with R and 
-TensorFlow.
+We thank Navdeep Gill, Daniel Falbel, Morgan Bugbee, the volunteers of the CAS
+project oversight group, and two anonymous reviewers for helpful discussions
+and/or feedback.
 This work is supported by the Casualty Actuarial Society.
 
 References {#references .unnumbered}
