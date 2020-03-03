@@ -611,7 +611,10 @@ investigate.
 As with permutation feature importance, one should be careful when interpreting
 PDP when there are strongly correlated variables. Since we average over the
 marginal distribution of the rest of the variables, we may take into account
-unrealistic data (e.g. high vehicle age for a model that is brand new).
+unrealistic data (e.g. high vehicle age for a model that is brand new). To
+address this drawback, alternative visualization techniques have been proposed,
+such as accumulated local effect (ALE) plots, which take expectations over
+conditional, rather than marginal, distributions [@apley2016visualizing].
 
 ### Variable Attribution
 
