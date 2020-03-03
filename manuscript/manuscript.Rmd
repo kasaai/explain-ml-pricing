@@ -167,7 +167,7 @@ decisions about how best to select rates.
 
 Similarly, although the focus of this paper is on communication in a pricing
 context, the techniques explored in this paper (and many of the concerns discussed)
-may also be relevant to other contexts, such as claim-level reserving / analytics
+may also be relevant to other contexts, such as claim-level reserving or analytics,
 or other applications of machine learning to the insurance industry.
 
 # The Need to See Inside the Black Box {#need}
@@ -217,7 +217,7 @@ understanding as the model form and the data on which the model is fitted.
 Because the final model result is inseparable from these three components 
 (training method, model form, and data), it is not generally adequate to just
 know the method employed to make an objective appraisal of the reasonableness 
-of the result. More information is necessary.
+of the result.
 
 These issues also pose particular challenges with respect to other standards.
 For instance, as discussed previously, ASOP 12 requires
