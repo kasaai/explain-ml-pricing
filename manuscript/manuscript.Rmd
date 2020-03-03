@@ -448,6 +448,9 @@ what extent do the predictors improve the accuracy of the model?
 3. For a particular policyholder, how does each characteristic contribute to
 the loss cost prediction?
 
+The techniques we utilize to answer these questions are permutation variable
+importance, partial dependence plots, and additive variable attributions, 
+respectively.
 In our discussion, we adopt the organization of techniques and some notation
 presented in @molnar2018interpretable and @biecekPMVEE, which are comprehensive
 references on the most established ML interpretation techniques.
