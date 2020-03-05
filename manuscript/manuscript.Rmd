@@ -21,7 +21,7 @@ abstract: |
   property & casualty insurance ratemaking, propose a framework for explaining 
   models, and present a case study to illustrate the framework.
 
-journal: "[journal]"
+journal: "Variance"
 date: "`r Sys.Date()`"
 bibliography: explain-pricing.bib
 #linenumbers: true
