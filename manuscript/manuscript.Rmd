@@ -30,7 +30,7 @@ numbersections: true
 output: 
   bookdown::pdf_book:
     base_format: rticles::elsevier_article
-layout: preprint, 3p, twocolumn, letterpaper, 10pt
+layout: preprint, 3p, letterpaper, 10pt
 ---
 
 # Introduction
