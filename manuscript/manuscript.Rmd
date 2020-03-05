@@ -1,18 +1,18 @@
 ---
 title: Towards Explainability of Machine Learning Models in Insurance Pricing
 author:
-  - name: Kevin Kuo
-    email: kevin@kasa.ai
+  - name: (redacted)
+    email: (redacted)
     affiliation: a
     footnote: Corresponding Author
-  - name: Daniel Lupton
-    email: dlupton@taylorandmulder.com
+  - name: (redacted)
+    email: (redacted)
     affiliation: b
 address:
   - code: a
-    address: Kasa AI, 3040 78th Ave SE \#1271, Mercer Island, WA 98040, USA
+    address: (redacted)
   - code: b
-    address: Taylor & Mulder, 10508 Rivers Bend Lane, Potomac, MD 20854, USA
+    address: (redacted)
 abstract: |
   Machine learning methods have garnered increasing interest among actuaries in
   recent years. However, their adoption by practitioners has been limited, partly
@@ -740,14 +740,6 @@ barrier preventing wider adoption and exploration of these techniques. The
 methods proposed in this paper could therefore represent important strides in
 unlocking the potential of machine learning within the insurance industry.
 
-Acknowledgments {.unnumbered}
-==========
-
-We thank Navdeep Gill, Daniel Falbel, Morgan Bugbee, the volunteers of the CAS
-project oversight group, and two anonymous reviewers for helpful discussions
-and/or feedback.
-This work is supported by the Casualty Actuarial Society.
-
 References {#references .unnumbered}
 ==========
 <div id="refs"></div>
@@ -793,7 +785,7 @@ Implementation is done using the R [@rlang] interface to TensorFlow
 implemention by @biecekPMVEE, and the code to reproduce them are available on
 GitHub[^1].
 
-[^1]: https://github.com/kasaai/explain-ml-pricing
+[^1]: (redacted)
 
 ## Data
 
